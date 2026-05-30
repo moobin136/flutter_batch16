@@ -1,5 +1,5 @@
 import 'package:device_preview/device_preview.dart';
-import 'export.dart';
+import 'package:flutter_batch16/export.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -10,7 +10,25 @@ class MyApp extends StatelessWidget {
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
-      home: const Home(),
+      theme: ThemeData(
+        brightness: Brightness.light,
+        inputDecorationTheme: InputDecorationTheme(
+          labelStyle: const TextStyle(
+            fontSize: 15,
+            color: Colors.black,
+          ),
+          hintStyle: TextStyle(
+            fontSize: 13,
+            color: Colors.black.withOpacity(0.6),
+          ),
+          border: const OutlineInputBorder(),
+          focusedBorder: const OutlineInputBorder(),
+          enabledBorder: const OutlineInputBorder(),
+          filled: true,
+          fillColor: Colors.grey.withOpacity(0.18),
+        ),
+      ),
+      home: const RegisterScreen(),
     );
   }
 }
