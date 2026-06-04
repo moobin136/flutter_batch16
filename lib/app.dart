@@ -17,7 +17,6 @@ class MyApp extends StatelessWidget {
             fontSize: 15,
             color: Colors.black,
           ),
-          
           hintStyle: TextStyle(
             fontSize: 13,
             color: Colors.black.withOpacity(0.6),
