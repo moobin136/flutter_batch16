@@ -35,42 +35,44 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'Register',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.black,
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'Register',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              buildForm(),
-              button(),
-              const SizedBox(height: 20),
-              richTextSignIn(),
-              const Align(
-                alignment: Alignment.center,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8.0),
-                  child: Text(
-                    'or',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black,
+                const SizedBox(height: 20),
+                buildForm(),
+                button(),
+                const SizedBox(height: 20),
+                richTextSignIn(),
+                const Align(
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8.0),
+                    child: Text(
+                      'or',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              iconWithButton(),
-            ],
+                iconWithButton(),
+              ],
+            ),
           ),
         ),
       ),
@@ -90,7 +92,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
             titleText: 'Enter your mobile number',
             hintText: '+8801************',
             child: GestureDetector(
-                onTap: () {}, child: const Icon(Icons.verified_outlined)),
+              onTap: () {
+                setState(() {
+                  _phoneNumberController.text.isNotEmpty;
+                  setState(() {});
+                });
+              },
+              child: Icon(
+                _phoneNumberController.text.isNotEmpty
+                    ? Icons.verified_outlined
+                    : Icons.error_outline,
+              ),
+            ),
           ),
           CmTextField(
             validator: (value) => validateField(value, 'Enter your email'),
@@ -98,7 +111,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
             titleText: 'Enter your email',
             hintText: 'example@email.com',
             child: GestureDetector(
-                onTap: () {}, child: const Icon(Icons.verified_outlined)),
+              onTap: () {
+                setState(() {});
+              },
+              child: Icon(
+                _emailController.text.isNotEmpty
+                    ? Icons.verified_outlined
+                    : Icons.error_outline,
+              ),
+            ),
           ),
           CmTextField(
             validator: (value) => validateField(value, 'Enter your password'),
@@ -198,7 +219,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void onTapRegister() {
     if (_globalKey.currentState!.validate()) {
       if (kDebugMode) {
-        print('Register');
+        print('Form is valid!');
+        print('Phone Number: ${_phoneNumberController.text}');
+        print('Email: ${_emailController.text}');
+        print('Password: ${_passwordController.text}');
+        print('Confirm Password: ${_confirmPasswordController.text}');
       }
     }
   }
