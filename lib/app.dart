@@ -10,8 +10,10 @@ class MyApp extends StatelessWidget {
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
+
       theme: ThemeData(
         brightness: Brightness.light,
+        scaffoldBackgroundColor: Colors.white,
         inputDecorationTheme: InputDecorationTheme(
           labelStyle: const TextStyle(
             fontSize: 15,

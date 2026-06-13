@@ -5,6 +5,7 @@ import 'package:flutter_batch16/core/global_widgets/cm_button.dart';
 import 'package:flutter_batch16/core/global_widgets/cm_text_field.dart';
 import 'package:flutter_batch16/core/global_widgets/icon_text_button.dart';
 import 'package:flutter_batch16/export.dart';
+import 'package:flutter_batch16/screen/login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -229,9 +230,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   void onTapSignIn() {
-    if (kDebugMode) {
-      print("Sign In button tapped!");
-    }
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const SignInScreen(),
+      ),
+    );
   }
 
   void onTapGoogle() {

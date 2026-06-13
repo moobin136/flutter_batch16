@@ -11,6 +11,7 @@ class CmTextField extends StatelessWidget {
     this.obscureText = false,
     required this.controller,
     this.validator,
+    this.keyboardType,
   });
 
   final String titleText;
@@ -19,6 +20,7 @@ class CmTextField extends StatelessWidget {
   final bool obscureText;
   final TextEditingController controller;
   final FormFieldValidator<String>? validator;
+  final TextInputType? keyboardType;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +44,7 @@ class CmTextField extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         TextFormField(
+          keyboardType: keyboardType,
           validator: validator,
           controller: controller,
           decoration: InputDecoration(
@@ -52,8 +55,12 @@ class CmTextField extends StatelessWidget {
             border: outlineInputBorder,
             focusedBorder: outlineInputBorder,
             enabledBorder: outlineInputBorder,
+            // ভুল হলে বর্ডার লাল হবে
             errorBorder: outlineInputBorder.copyWith(
                 borderSide: const BorderSide(color: Colors.red)),
+            // ভুল থাকা অবস্থায় ক্লিক করলেও যেন বর্ডার লাল থাকে
+            focusedErrorBorder: outlineInputBorder.copyWith(
+                borderSide: const BorderSide(color: Colors.red, width: 1.5)),
           ),
           obscureText: obscureText,
         ),
