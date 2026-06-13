@@ -15,258 +15,236 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(
     DevicePreview(
-      builder: (context) => const TaskiApp(),
+      builder: (context) => const CounterNavApp(),
     ),
   );
 }
 
-// Task Model
-class TodoTask {
-  String title;
-  bool isCompleted;
-
-  TodoTask({
-    required this.title,
-    this.isCompleted = false,
-  });
-}
-
-class TaskiApp extends StatefulWidget {
-  const TaskiApp({super.key});
-
-  @override
-  State<TaskiApp> createState() => _TaskiAppState();
-}
-
-class _TaskiAppState extends State<TaskiApp> {
-  final List<TodoTask> _tasks = [
-    TodoTask(title: 'Buy groceries'),
-    TodoTask(title: 'Complete Flutter Assignment', isCompleted: true),
-    TodoTask(title: 'Walk the dog'),
-  ];
+class CounterNavApp extends StatelessWidget {
+  const CounterNavApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Taski Todo App',
-      debugShowCheckedModeBanner: false,
+      title: 'Counter Nav App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => HomeScreen(
-              tasks: _tasks,
-              onTaskChanged: () => setState(() {}),
-            ),
-        '/create-task': (context) => CreateTaskScreen(
-              onTaskAdded: (newTitle) {
-                setState(() {
-                  _tasks.add(TodoTask(title: newTitle));
-                });
-              },
-            ),
-      },
+      home: const MainTabController(),
     );
   }
 }
 
-// Home Screen
-class HomeScreen extends StatefulWidget {
-  final List<TodoTask> tasks;
-  final VoidCallback onTaskChanged;
-
-  const HomeScreen({
-    super.key,
-    required this.tasks,
-    required this.onTaskChanged,
-  });
+class MainTabController extends StatefulWidget {
+  const MainTabController({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<MainTabController> createState() => _MainTabControllerState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 0;
+class _MainTabControllerState extends State<MainTabController> {
+  int _currentIndex = 0;
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final pendingTasks = widget.tasks.where((t) => !t.isCompleted).toList();
-    final completedTasks = widget.tasks.where((t) => t.isCompleted).toList();
+    final List<Widget> screens = [
+      HomeScreen(
+        counter: _counter,
+        onIncrement: _incrementCounter,
+      ),
+      const AboutScreen(),
+    ];
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_selectedIndex == 0 ? 'Todo Tasks' : 'Completed Tasks'),
-        centerTitle: true,
-        backgroundColor: Colors.blue.shade100,
-      ),
-      body: _selectedIndex == 0
-          ? _buildTaskList(pendingTasks, isCompletedTab: false)
-          : _buildTaskList(completedTasks, isCompletedTab: true),
-      floatingActionButton: _selectedIndex == 0
-          ? FloatingActionButton(
-              onPressed: () => Navigator.pushNamed(context, '/create-task'),
-              child: const Icon(Icons.add),
-            )
-          : null,
+      body: screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: (index) => setState(() => _selectedIndex = index),
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: 'Todo',
+            icon: Icon(Icons.home),
+            label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.check_circle),
-            label: 'Completed',
+            icon: Icon(Icons.info),
+            label: 'About',
           ),
         ],
       ),
     );
   }
+}
 
-  Widget _buildTaskList(List<TodoTask> currentTasks,
-      {required bool isCompletedTab}) {
-    if (currentTasks.isEmpty) {
-      return const Center(
-        child: Text(
-          'No tasks found!',
-          style: TextStyle(fontSize: 18, color: Colors.grey),
-        ),
-      );
-    }
+class HomeScreen extends StatelessWidget {
+  final int counter;
+  final VoidCallback onIncrement;
 
-    return ListView.builder(
-      padding: const EdgeInsets.all(8),
-      itemCount: currentTasks.length,
-      itemBuilder: (context, index) {
-        final task = currentTasks[index];
+  const HomeScreen({
+    super.key,
+    required this.counter,
+    required this.onIncrement,
+  });
 
-        return Container(
-          margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.15),
-                spreadRadius: 2,
-                blurRadius: 6,
-              )
-            ],
-          ),
-          child: ListTile(
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-            leading: Checkbox(
-              value: task.isCompleted,
-              onChanged: (bool? value) {
-                setState(() {
-                  task.isCompleted = value ?? false;
-                });
-                widget.onTaskChanged();
-              },
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Home Screen')),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              'You have pushed the button this many times:',
+              style: TextStyle(fontSize: 16),
             ),
-            title: Text(
-              task.title,
-              style: TextStyle(
-                decoration:
-                    task.isCompleted ? TextDecoration.lineThrough : null,
-                color: task.isCompleted ? Colors.grey : Colors.black87,
-                fontSize: 16,
-              ),
+            Text(
+              '$counter',
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
-            trailing: IconButton(
-              icon: const Icon(Icons.delete, color: Colors.redAccent),
+            const SizedBox(height: 20),
+            ElevatedButton.icon(
               onPressed: () {
-                setState(() {
-                  widget.tasks.remove(task);
-                });
-                widget.onTaskChanged();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailsScreen(counterValue: counter),
+                  ),
+                );
               },
+              icon: const Icon(Icons.arrow_forward),
+              label: const Text('Go to Details Screen'),
             ),
-          ),
-        );
-      },
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: onIncrement,
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }
 
-// Create New Task Screen
-class CreateTaskScreen extends StatefulWidget {
-  final Function(String) onTaskAdded;
+class DetailsScreen extends StatefulWidget {
+  final int counterValue;
 
-  const CreateTaskScreen({super.key, required this.onTaskAdded});
+  const DetailsScreen({super.key, required this.counterValue});
 
   @override
-  State<CreateTaskScreen> createState() => _CreateTaskScreenState();
+  State<DetailsScreen> createState() => _DetailsScreenState();
 }
 
-class _CreateTaskScreenState extends State<CreateTaskScreen> {
-  final TextEditingController _controller = TextEditingController();
+class _DetailsScreenState extends State<DetailsScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
 
-  void submitData() {
-    final text = _controller.text.trim();
-    if (text.isEmpty) return;
+  @override
+  void initState() {
+    _tabController = TabController(length: 2, vsync: this);
+    print("DetailsScreen: initState() called.");
+  }
 
-    widget.onTaskAdded(text);
-    Navigator.pop(context);
+  @override
+  void dispose() {
+    _tabController.dispose();
+    print("DetailsScreen: dispose() called.");
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Create New Task'),
-        backgroundColor: Colors.blue.shade100,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            TextField(
-              controller: _controller,
-              decoration: const InputDecoration(
-                labelText: 'Task Title',
-                border: OutlineInputBorder(),
-                hintText: 'What needs to be done?',
-              ),
-              autofocus: true,
-              onSubmitted: (_) => submitData(),
+        title: const Text('Details Screen'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+        ),
+        bottom: TabBar(
+          controller: _tabController,
+          tabs: const [
+            Tab(
+              icon: Icon(Icons.analytics),
+              text: 'Value',
             ),
-            const SizedBox(height: 24),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Text('Cancel'),
-                ),
-                const SizedBox(width: 12),
-                ElevatedButton(
-                  onPressed: submitData, // ← Fixed here
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 24, vertical: 12),
-                  ),
-                  child: const Text('Save Task'),
-                ),
-              ],
-            )
+            Tab(
+              icon: Icon(Icons.help),
+              text: 'Explain',
+            ),
           ],
         ),
       ),
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          // Tab 1 View
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text('Passed Counter Value:',
+                    style: TextStyle(fontSize: 18)),
+                const SizedBox(height: 10),
+                Text(
+                  '${widget.counterValue}',
+                  style: const TextStyle(
+                    fontSize: 48,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // Tab 2 View
+          const Center(
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Card(
+                child: Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Text(
+                    'This screen received data from the Home Screen via its constructor. '
+                    'The top layout uses a TabController synced with a TabBarView.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
+}
+
+class AboutScreen extends StatelessWidget {
+  const AboutScreen({super.key});
 
   @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('About Screen')),
+      body: const Center(
+        child: Text(
+          'A simple demo app utilizing standard Flutter navigation and state hooks.',
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
   }
 }
