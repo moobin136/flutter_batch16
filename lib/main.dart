@@ -105,7 +105,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
   Widget _buildProfileCard() {
     return Card(
       elevation: 4,
-      shadowColor: Colors.black12,
+      shadowColor: Colors.grey[600],
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.r),
       ),
@@ -114,21 +114,34 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Badge(
-              label: const Text('New'),
-              backgroundColor: Colors.redAccent,
-              padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
-              textStyle:
-                  TextStyle(fontSize: 10.sp, fontWeight: FontWeight.bold),
-              child: CircleAvatar(
-                radius: 40.r,
-                backgroundColor: const Color(0xFFC5CAE9),
-                child: Icon(
-                  Icons.person,
-                  size: 45.r,
-                  color: const Color(0xFF3F51B5),
+            Stack(
+              children: [
+                CircleAvatar(
+                  radius: 40.r,
+                  backgroundColor: const Color(0xFFC5CAE9),
+                  child: Icon(
+                    Icons.person,
+                    size: 45.r,
+                    color: const Color(0xFF3F51B5),
+                  ),
                 ),
-              ),
+                Positioned(
+                  top: 0.w,
+                  right: 0.w,
+                  child: Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 6.h, vertical: 2.w),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.w),
+                      color: Colors.red,
+                    ),
+                    child: Text(
+                      'New',
+                      style: TextStyle(color: Colors.white, fontSize: 9.sp),
+                    ),
+                  ),
+                )
+              ],
             ),
             SizedBox(height: 16.h),
             Text(
