@@ -16,7 +16,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Initializing ScreenUtil with a standard design size (e.g., 360x690)
     return ScreenUtilInit(
       designSize: const Size(360, 690),
       minTextAdapt: true,
@@ -52,7 +51,6 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
     _simulateLoading();
   }
 
-  // Simulating a 3-second loading time for the shimmer effect
   void _simulateLoading() async {
     await Future.delayed(const Duration(seconds: 3));
     if (mounted) {
@@ -87,7 +85,6 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
     );
   }
 
-  // 1. Shimmer Loading Placeholder Widget
   Widget _buildShimmerLoading() {
     return Shimmer.fromColors(
       baseColor: Colors.grey[300]!,
@@ -105,7 +102,6 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
     );
   }
 
-  // 2. Main Student Profile Card Widget
   Widget _buildProfileCard() {
     return Card(
       elevation: 4,
@@ -118,7 +114,6 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // Avatar with New Badge
             Badge(
               label: const Text('New'),
               backgroundColor: Colors.redAccent,
@@ -136,8 +131,6 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
               ),
             ),
             SizedBox(height: 16.h),
-
-            // Profile Information
             Text(
               'Mike Rack',
               style: TextStyle(
@@ -163,8 +156,6 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
               ),
             ),
             SizedBox(height: 24.h),
-
-            // View Details Button (Custom Dialog Trigger)
             SizedBox(
               width: double.infinity,
               height: 40.h,
@@ -182,8 +173,6 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
               ),
             ),
             SizedBox(height: 12.h),
-
-            // Mark Present Button (Custom Snackbar Trigger)
             SizedBox(
               width: double.infinity,
               height: 40.h,
@@ -209,7 +198,6 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
     );
   }
 
-  // 3. Custom Dialog Box Method
   void _showDetailsDialog() {
     showDialog(
       context: context,
@@ -266,7 +254,6 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
     );
   }
 
-  // Helper widget to keep dialog layout structured
   Widget _buildDialogRow(IconData icon, String label, String value) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -287,7 +274,6 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
     );
   }
 
-  // 4. Custom SnackBar Method
   void _showCustomSnackbar() {
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
