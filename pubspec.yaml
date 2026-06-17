@@ -17,6 +17,9 @@ dependencies:
   device_preview:
   #http
   http:
+  #flutter_screenutil
+  flutter_screenutil:
+  shimmer: ^3.0.0
 
 
   #svg

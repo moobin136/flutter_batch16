@@ -1,248 +1,303 @@
-// import 'package:device_preview/device_preview.dart';
-// import 'export.dart';
-//
-// void main() {
-//   runApp(
-//     DevicePreview(
-//       builder: (context) => const MyApp(),
-//     ),
-//   );
-// }
-
-import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shimmer/shimmer.dart';
 
 void main() {
-  runApp(
-    DevicePreview(
-      builder: (context) => const CounterNavApp(),
-    ),
-  );
+  runApp(const MyApp());
 }
 
-class CounterNavApp extends StatelessWidget {
-  const CounterNavApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Counter Nav App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        useMaterial3: true,
-      ),
-      home: const MainTabController(),
-    );
-  }
-}
-
-class MainTabController extends StatefulWidget {
-  const MainTabController({super.key});
-
-  @override
-  State<MainTabController> createState() => _MainTabControllerState();
-}
-
-class _MainTabControllerState extends State<MainTabController> {
-  int _currentIndex = 0;
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final List<Widget> screens = [
-      HomeScreen(
-        counter: _counter,
-        onIncrement: _incrementCounter,
-      ),
-      const AboutScreen(),
-    ];
-
-    return Scaffold(
-      body: screens[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+    // Initializing ScreenUtil with a standard design size (e.g., 360x690)
+    return ScreenUtilInit(
+      designSize: const Size(360, 690),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Student Profile App',
+          theme: ThemeData(
+            primarySwatch: Colors.indigo,
+            scaffoldBackgroundColor: const Color(0xFFF9F9FB),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.info),
-            label: 'About',
-          ),
-        ],
-      ),
+          home: const StudentProfileScreen(),
+        );
+      },
     );
   }
 }
 
-class HomeScreen extends StatelessWidget {
-  final int counter;
-  final VoidCallback onIncrement;
-
-  const HomeScreen({
-    super.key,
-    required this.counter,
-    required this.onIncrement,
-  });
+class StudentProfileScreen extends StatefulWidget {
+  const StudentProfileScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Home Screen')),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              'You have pushed the button this many times:',
-              style: TextStyle(fontSize: 16),
-            ),
-            Text(
-              '$counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton.icon(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => DetailsScreen(counterValue: counter),
-                  ),
-                );
-              },
-              icon: const Icon(Icons.arrow_forward),
-              label: const Text('Go to Details Screen'),
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: onIncrement,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
-    );
-  }
+  State<StudentProfileScreen> createState() => _StudentProfileScreenState();
 }
 
-class DetailsScreen extends StatefulWidget {
-  final int counterValue;
-
-  const DetailsScreen({super.key, required this.counterValue});
-
-  @override
-  State<DetailsScreen> createState() => _DetailsScreenState();
-}
-
-class _DetailsScreenState extends State<DetailsScreen>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+class _StudentProfileScreenState extends State<StudentProfileScreen> {
+  bool _isLoading = true;
 
   @override
   void initState() {
-    _tabController = TabController(length: 2, vsync: this);
-    print("DetailsScreen: initState() called.");
+    super.initState();
+    _simulateLoading();
   }
 
-  @override
-  void dispose() {
-    _tabController.dispose();
-    print("DetailsScreen: dispose() called.");
-    super.dispose();
+  // Simulating a 3-second loading time for the shimmer effect
+  void _simulateLoading() async {
+    await Future.delayed(const Duration(seconds: 3));
+    if (mounted) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Details Screen'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
+        title: Text(
+          'Student Profile',
+          style: TextStyle(
+            fontSize: 18.sp,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
         ),
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: const [
-            Tab(
-              icon: Icon(Icons.analytics),
-              text: 'Value',
+        centerTitle: true,
+        backgroundColor: const Color(0xFF3F51B5),
+        elevation: 0,
+      ),
+      body: Center(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24.w),
+          child: _isLoading ? _buildShimmerLoading() : _buildProfileCard(),
+        ),
+      ),
+    );
+  }
+
+  // 1. Shimmer Loading Placeholder Widget
+  Widget _buildShimmerLoading() {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
+      child: Card(
+        elevation: 2,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.r),
+        ),
+        child: SizedBox(
+          width: double.infinity,
+          height: 320.h,
+        ),
+      ),
+    );
+  }
+
+  // 2. Main Student Profile Card Widget
+  Widget _buildProfileCard() {
+    return Card(
+      elevation: 4,
+      shadowColor: Colors.black12,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.r),
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(20.w),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Avatar with New Badge
+            Badge(
+              label: const Text('New'),
+              backgroundColor: Colors.redAccent,
+              padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
+              textStyle: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.bold),
+              child: CircleAvatar(
+                radius: 40.r,
+                backgroundColor: const Color(0xFFC5CAE9),
+                child: Icon(
+                  Icons.person,
+                  size: 45.r,
+                  color: const Color(0xFF3F51B5),
+                ),
+              ),
             ),
-            Tab(
-              icon: Icon(Icons.help),
-              text: 'Explain',
+            SizedBox(height: 16.h),
+
+            // Profile Information
+            Text(
+              'Mike Rack',
+              style: TextStyle(
+                fontSize: 20.sp,
+                fontWeight: FontWeight.bold,
+                color: const Color(0xFF1A237E),
+              ),
+            ),
+            SizedBox(height: 4.h),
+            Text(
+              'ID: STU-2025-0042',
+              style: TextStyle(
+                fontSize: 13.sp,
+                color: Colors.grey[600],
+              ),
+            ),
+            SizedBox(height: 2.h),
+            Text(
+              'Computer Science & Engineering',
+              style: TextStyle(
+                fontSize: 12.sp,
+                color: Colors.grey[500],
+              ),
+            ),
+            SizedBox(height: 24.h),
+
+            // View Details Button (Custom Dialog Trigger)
+            SizedBox(
+              width: double.infinity,
+              height: 40.h,
+              child: ElevatedButton.icon(
+                onPressed: _showDetailsDialog,
+                icon: Icon(Icons.info_outline, size: 16.r),
+                label: Text('View Details', style: TextStyle(fontSize: 14.sp)),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF3F51B5),
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 12.h),
+
+            // Mark Present Button (Custom Snackbar Trigger)
+            SizedBox(
+              width: double.infinity,
+              height: 40.h,
+              child: OutlinedButton.icon(
+                onPressed: _showCustomSnackbar,
+                icon: Icon(Icons.check_circle_outline, size: 16.r, color: Colors.green),
+                label: Text(
+                  'Mark Present',
+                  style: TextStyle(fontSize: 14.sp, color: Colors.green),
+                ),
+                style: OutlinedButton.styleFrom(
+                  side: const BorderSide(color: Colors.green),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                ),
+              ),
             ),
           ],
         ),
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          // Tab 1 View
-          Center(
+    );
+  }
+
+  // 3. Custom Dialog Box Method
+  void _showDetailsDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.r),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(20.w),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Passed Counter Value:',
-                    style: TextStyle(fontSize: 18)),
-                const SizedBox(height: 10),
-                Text(
-                  '${widget.counterValue}',
-                  style: const TextStyle(
-                    fontSize: 48,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blue,
+                Row(
+                  children: [
+                    Icon(Icons.school, color: const Color(0xFF3F51B5), size: 24.r),
+                    SizedBox(width: 8.w),
+                    Text(
+                      'Student Details',
+                      style: TextStyle(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                const Divider(),
+                SizedBox(height: 8.h),
+                _buildDialogRow(Icons.person, 'Name:', 'Mike Rack'),
+                SizedBox(height: 8.h),
+                _buildDialogRow(Icons.badge, 'ID:', 'STU-2025-0042'),
+                SizedBox(height: 8.h),
+                _buildDialogRow(Icons.business, 'Dept:', 'Computer Science & Eng.'),
+                SizedBox(height: 24.h),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(
+                      'Close',
+                      style: TextStyle(fontSize: 14.sp, color: const Color(0xFF3F51B5)),
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-          // Tab 2 View
-          const Center(
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Card(
-                child: Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text(
-                    'This screen received data from the Home Screen via its constructor. '
-                    'The top layout uses a TabController synced with a TabBarView.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
-}
 
-class AboutScreen extends StatelessWidget {
-  const AboutScreen({super.key});
+  // Helper widget to keep dialog layout structured
+  Widget _buildDialogRow(IconData icon, String label, String value) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(icon, size: 16.r, color: Colors.grey[600]),
+        SizedBox(width: 8.w),
+        Text(
+          '$label ',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.sp),
+        ),
+        Expanded(
+          child: Text(
+            value,
+            style: TextStyle(fontSize: 13.sp, color: Colors.black87),
+          ),
+        ),
+      ],
+    );
+  }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('About Screen')),
-      body: const Center(
-        child: Text(
-          'A simple demo app utilizing standard Flutter navigation and state hooks.',
-          textAlign: TextAlign.center,
+  // 4. Custom SnackBar Method
+  void _showCustomSnackbar() {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            Text(
+              'Mike Rack marked as Present',
+              style: TextStyle(fontSize: 13.sp, color: Colors.white),
+            ),
+            SizedBox(width: 6.w),
+            Icon(Icons.check_box, color: Colors.greenAccent, size: 18.r),
+          ],
+        ),
+        backgroundColor: const Color(0xFF2C2D35),
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 2),
+        margin: EdgeInsets.all(12.w),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(4.r),
         ),
       ),
     );
