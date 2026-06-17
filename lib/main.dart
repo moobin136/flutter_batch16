@@ -1,9 +1,14 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    DevicePreview(
+      builder: (context) => const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -118,7 +123,8 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
               label: const Text('New'),
               backgroundColor: Colors.redAccent,
               padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
-              textStyle: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.bold),
+              textStyle:
+                  TextStyle(fontSize: 10.sp, fontWeight: FontWeight.bold),
               child: CircleAvatar(
                 radius: 40.r,
                 backgroundColor: const Color(0xFFC5CAE9),
@@ -183,7 +189,8 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
               height: 40.h,
               child: OutlinedButton.icon(
                 onPressed: _showCustomSnackbar,
-                icon: Icon(Icons.check_circle_outline, size: 16.r, color: Colors.green),
+                icon: Icon(Icons.check_circle_outline,
+                    size: 16.r, color: Colors.green),
                 label: Text(
                   'Mark Present',
                   style: TextStyle(fontSize: 14.sp, color: Colors.green),
@@ -219,7 +226,8 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.school, color: const Color(0xFF3F51B5), size: 24.r),
+                    Icon(Icons.school,
+                        color: const Color(0xFF3F51B5), size: 24.r),
                     SizedBox(width: 8.w),
                     Text(
                       'Student Details',
@@ -236,7 +244,8 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                 SizedBox(height: 8.h),
                 _buildDialogRow(Icons.badge, 'ID:', 'STU-2025-0042'),
                 SizedBox(height: 8.h),
-                _buildDialogRow(Icons.business, 'Dept:', 'Computer Science & Eng.'),
+                _buildDialogRow(
+                    Icons.business, 'Dept:', 'Computer Science & Eng.'),
                 SizedBox(height: 24.h),
                 Align(
                   alignment: Alignment.centerRight,
@@ -244,7 +253,8 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                     onPressed: () => Navigator.pop(context),
                     child: Text(
                       'Close',
-                      style: TextStyle(fontSize: 14.sp, color: const Color(0xFF3F51B5)),
+                      style: TextStyle(
+                          fontSize: 14.sp, color: const Color(0xFF3F51B5)),
                     ),
                   ),
                 ),
