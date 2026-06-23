@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_batch16/profile_screen.dart';
-import 'package:flutter_batch16/widget/contact_screen.dart';
+import 'package:flutter_batch16/contact_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MyApp extends StatelessWidget {
