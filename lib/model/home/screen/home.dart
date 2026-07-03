@@ -1,4 +1,3 @@
-
 import 'package:flutter_batch16/export.dart';
 
 class Home extends StatelessWidget {
@@ -6,20 +5,21 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: Colors.white,
-      appBar: const CustomAppbar(
+      appBar: CustomAppbar(
         isBorderSizNone: false,
       ),
       body: Column(
         children: [
-          const Spacer(),
+          Spacer(),
           Center(
             child: CustomText(
-              text: 'flaksjdfljasldjflk;ajsdlk;fjlk;asdjflkjaslk;djflk;asjdlfkjalskdjfl;kasjdlkfjlasdjfljasdlkfjlasjdfljasldfjlasjdlfjalsdjfajsdofjo;asjdfojo',
+              text:
+                  'flaksjdfljasldjflk;ajsdlk;fjlk;asdjflkjaslk;djflk;asjdlfkjalskdjfl;kasjdlkfjlasdjfljasdlkfjlasjdfljasldfjlasjdlfjalsdjfajsdofjo;asjdfojo',
             ),
           ),
-          const Spacer()
+          Spacer()
         ],
       ),
     );
