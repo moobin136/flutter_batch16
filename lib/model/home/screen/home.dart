@@ -9,6 +9,8 @@ class Home extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: CustomAppbar(
         isBorderSizNone: false,
+
+        
       ),
       body: Column(
         children: [
