@@ -39,14 +39,14 @@ class CustomText extends StatelessWidget {
       overflow: TextOverflow.ellipsis,
       maxLines: maxLines,
       softWrap: softWrap,
-      selectionColor: Colors.blueGrey,
+      // selectionColor: Colors.blueGrey,
       textAlign: textAlign,
       style: TextStyle(
         color: color,
         
         fontSize: fSiz,
         fontWeight: fontWeight,
-        backgroundColor: bgColor,
+        // backgroundColor: bgColor,
       ),
     );
   }

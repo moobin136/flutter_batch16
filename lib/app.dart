@@ -1,4 +1,5 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:flutter_batch16/routes.dart';
 import 'export.dart';
 
 class MyApp extends StatelessWidget {
@@ -10,7 +11,8 @@ class MyApp extends StatelessWidget {
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
-      home: const Home(),
+      initialRoute: AppRoutes.initialRoute,
+      routes: AppRoutes.getRoutes(),
     );
   }
 }
