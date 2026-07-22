@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter_batch16/export.dart';
 import 'package:flutter_batch16/routes.dart';
+import 'package:flutter_batch16/utils/app_colors.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -23,8 +24,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const CustomText(
-                    text: 'Get Start With Us',
-                    fSiz: 28,
+                    text: 'Get Started With',
+                    fSiz: 32,
                     fontWeight: FontWeight.w700,
                   ),
                   const SizedBox(height: 16),
@@ -61,10 +62,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: TextButton(
                       onPressed: () {
                         print('password Forgot');
+                        Navigator.pushNamed(
+                          context,
+                          AppRoutes.forgetPasswordEmailScreen,
+                        );
                       },
                       child: const CustomText(
-                        text: 'Forgot Password ?',
-                        color: Colors.grey,
+                        text: 'Forget Password ?',
+                        color: AppColors.texGrayColor,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -77,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       text: TextSpan(
                         children: [
                           const TextSpan(
-                            text: 'D\'ont have and accounts',
+                            text: 'Don\'t have account?',
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 14,
@@ -86,9 +91,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           TextSpan(
                             recognizer: TapGestureRecognizer()..onTap = signUp,
-                            text: ' Sign Up',
+                            text: ' Sign up',
                             style: const TextStyle(
-                              color: Colors.green,
+                              color: AppColors.primaryAppColor,
                               fontSize: 14,
                               fontWeight: FontWeight.w700,
                             ),

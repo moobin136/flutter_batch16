@@ -1,5 +1,6 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter_batch16/routes.dart';
+import 'package:flutter_batch16/utils/app_colors.dart';
 import 'export.dart';
 
 class MyApp extends StatelessWidget {
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
           fillColor: Colors.white,
           filled: true,
           focusColor: Colors.white,
-          labelStyle: TextStyle(color: Colors.grey),
+          labelStyle: TextStyle(color: AppColors.texGrayColor),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide.none,
           ),
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.green,
+            backgroundColor: AppColors.primaryAppColor,
             foregroundColor: Colors.white,
             fixedSize: const Size.fromWidth(double.maxFinite),
             padding: const EdgeInsets.symmetric(vertical: 14),

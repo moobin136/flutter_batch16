@@ -1,15 +1,17 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter_batch16/export.dart';
 import 'package:flutter_batch16/routes.dart';
+import 'package:flutter_batch16/utils/app_colors.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+class ForgetPasswordEmailScreen extends StatefulWidget {
+  const ForgetPasswordEmailScreen({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<ForgetPasswordEmailScreen> createState() =>
+      _ForgetPasswordEmailScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _ForgetPasswordEmailScreenState extends State<ForgetPasswordEmailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,9 +25,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const CustomText(
-                    text: 'Join With Us',
+                    text: 'Your Email Address',
                     fSiz: 32,
                     fontWeight: FontWeight.w700,
+                  ),
+                  const SizedBox(height: 8),
+                  const SizedBox(
+                    width: 340,
+                    child: CustomText(
+                      maxLines: 2,
+                      text:
+                          'A 6 digit verification pin will send to your email address',
+                      color: AppColors.texGrayColor,
+                    ),
                   ),
                   const SizedBox(height: 16),
                   Column(
@@ -36,33 +48,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                       const SizedBox(height: 16),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'First Name',
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Last name',
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Mobile',
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Password',
-                        ),
-                      ),
-                      const SizedBox(height: 16),
                       ElevatedButton(
                         onPressed: () {
                           print('login Press');
+                          // Navigator.pushReplacementNamed(
+                          //     context, AppRoutes.mainNavBarScreen);
                         },
                         child: const Icon(
                           Icons.login,
@@ -79,7 +69,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       text: TextSpan(
                         children: [
                           const TextSpan(
-                            text: 'Have you an accounts',
+                            text: 'Have an account?',
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 14,
@@ -87,10 +77,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ),
                           TextSpan(
-                            recognizer: TapGestureRecognizer()..onTap = logIn,
-                            text: ' logIn?',
+                            recognizer: TapGestureRecognizer()..onTap = signIn,
+                            text: ' Sign in',
                             style: const TextStyle(
-                              color: Colors.green,
+                              color: AppColors.primaryAppColor,
                               fontSize: 14,
                               fontWeight: FontWeight.w700,
                             ),
@@ -108,7 +98,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  logIn() {
+  signIn() {
     Navigator.pushReplacementNamed(context, AppRoutes.loginScreen);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter_batch16/export.dart';
 import 'package:flutter_batch16/screen/widget/task_count_card.dart';
+import 'package:flutter_batch16/utils/app_colors.dart';
 
 import '../core/global_widgets/task_card_common.dart';
 
@@ -14,6 +15,18 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: AppColors.primaryAppColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(100),
+        ),
+        onPressed: () {},
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+          size: 30,
+        ),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -30,7 +43,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: 10,
                 itemBuilder: (context, index) => TaskCardCommon(
-                  color: Colors.deepPurpleAccent,
+                  color: AppColors.newTaskColor,
                   title: 'Title',
                   subTitle:
                       'Lorium most likely refers to the Latin name for an ancient Etruscan village located 19 km west of Rome, Italy, along the Via Aurelia (near modern-day Castel di Guido). It is historically famous as the place where the Roman Emperor Antoninus Pius was educated and later built a palace',
