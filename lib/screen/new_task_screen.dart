@@ -1,4 +1,5 @@
 import 'package:flutter_batch16/export.dart';
+import 'package:flutter_batch16/routes.dart';
 import 'package:flutter_batch16/screen/widget/task_count_card.dart';
 import 'package:flutter_batch16/utils/app_colors.dart';
 
@@ -20,7 +21,9 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(100),
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, AppRoutes.addTaskScreen);
+        },
         child: const Icon(
           Icons.add,
           color: Colors.white,

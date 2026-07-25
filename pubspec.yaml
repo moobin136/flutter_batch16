@@ -17,6 +17,8 @@ dependencies:
   device_preview:
   #flutter svg
   flutter_svg: ^2.3.0
+  #pinput
+  pinput: ^6.0.2
 
 dev_dependencies:
   flutter_test:

@@ -9,4 +9,5 @@ class AppColors {
   static const Color texGrayColor = Color(0xffD1D1D1);
   static const Color ediIconColor = Color(0xff79D8AB);
   static const Color photoBgContainerColor = Color(0xff79D8AB);
+  static const Color profileContainerColor = Color(0xff666666);
 }

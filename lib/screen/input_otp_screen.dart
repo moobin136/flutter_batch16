@@ -2,16 +2,16 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter_batch16/export.dart';
 import 'package:flutter_batch16/routes.dart';
 import 'package:flutter_batch16/utils/app_colors.dart';
+import 'package:pinput/pinput.dart';
 
-class ForgetPasswordEmailScreen extends StatefulWidget {
-  const ForgetPasswordEmailScreen({super.key});
+class InputOTPScreen extends StatefulWidget {
+  const InputOTPScreen({super.key});
 
   @override
-  State<ForgetPasswordEmailScreen> createState() =>
-      _ForgetPasswordEmailScreenState();
+  State<InputOTPScreen> createState() => _InputOTPScreenState();
 }
 
-class _ForgetPasswordEmailScreenState extends State<ForgetPasswordEmailScreen> {
+class _InputOTPScreenState extends State<InputOTPScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +25,7 @@ class _ForgetPasswordEmailScreenState extends State<ForgetPasswordEmailScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const CustomText(
-                    text: 'Your Email Address',
+                    text: 'PIN Verification ',
                     fSiz: 32,
                     fontWeight: FontWeight.w700,
                   ),
@@ -42,23 +42,28 @@ class _ForgetPasswordEmailScreenState extends State<ForgetPasswordEmailScreen> {
                   const SizedBox(height: 16),
                   Column(
                     children: [
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'E-mail',
-                        ),
+                      Pinput(
+                        length: 6,
+                        autofocus: true,
+                        // focusedPinTheme: PinTheme(
+                        //   decoration: BoxDecoration(shape: BoxShape.circle),
+                        // ),
+                        closeKeyboardWhenCompleted: true,
+                        enabled: true,
+                        keyboardType: TextInputType.number,
                       ),
                       const SizedBox(height: 16),
                       ElevatedButton(
-                        onPressed: () {
-                          print('login Press');
-                          Navigator.pushReplacementNamed(
-                              context, AppRoutes.inputOTPScreen);
-                        },
-                        child: const Icon(
-                          Icons.login,
-                          size: 20,
-                        ),
-                      ),
+                          onPressed: () {
+                            print('login Press');
+                            Navigator.pushReplacementNamed(
+                                context, AppRoutes.setNewPasswordScreen);
+                          },
+                          child: const CustomText(
+                            text: 'Verify',
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          )),
                     ],
                   ),
                   const SizedBox(height: 32),

@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
           filled: true,
           focusColor: Colors.white,
           labelStyle: TextStyle(color: AppColors.texGrayColor),
+          hintStyle: TextStyle(color: AppColors.texGrayColor),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide.none,
           ),

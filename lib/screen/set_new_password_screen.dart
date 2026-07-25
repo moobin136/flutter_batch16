@@ -3,15 +3,14 @@ import 'package:flutter_batch16/export.dart';
 import 'package:flutter_batch16/routes.dart';
 import 'package:flutter_batch16/utils/app_colors.dart';
 
-class ForgetPasswordEmailScreen extends StatefulWidget {
-  const ForgetPasswordEmailScreen({super.key});
+class SetNewPasswordScreen extends StatefulWidget {
+  const SetNewPasswordScreen({super.key});
 
   @override
-  State<ForgetPasswordEmailScreen> createState() =>
-      _ForgetPasswordEmailScreenState();
+  State<SetNewPasswordScreen> createState() => _SetNewPasswordScreenState();
 }
 
-class _ForgetPasswordEmailScreenState extends State<ForgetPasswordEmailScreen> {
+class _SetNewPasswordScreenState extends State<SetNewPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +24,7 @@ class _ForgetPasswordEmailScreenState extends State<ForgetPasswordEmailScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const CustomText(
-                    text: 'Your Email Address',
+                    text: 'Set Password',
                     fSiz: 32,
                     fontWeight: FontWeight.w700,
                   ),
@@ -35,7 +34,7 @@ class _ForgetPasswordEmailScreenState extends State<ForgetPasswordEmailScreen> {
                     child: CustomText(
                       maxLines: 2,
                       text:
-                          'A 6 digit verification pin will send to your email address',
+                          'Minimum length password 8 character with Latter and number combination',
                       color: AppColors.texGrayColor,
                     ),
                   ),
@@ -44,21 +43,27 @@ class _ForgetPasswordEmailScreenState extends State<ForgetPasswordEmailScreen> {
                     children: [
                       TextFormField(
                         decoration: const InputDecoration(
-                          labelText: 'E-mail',
+                          labelText: 'New Password',
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          labelText: 'Confirm Password',
                         ),
                       ),
                       const SizedBox(height: 16),
                       ElevatedButton(
-                        onPressed: () {
-                          print('login Press');
-                          Navigator.pushReplacementNamed(
-                              context, AppRoutes.inputOTPScreen);
-                        },
-                        child: const Icon(
-                          Icons.login,
-                          size: 20,
-                        ),
-                      ),
+                          onPressed: () {
+                            print('login Press');
+                            Navigator.pushReplacementNamed(
+                                context, AppRoutes.loginScreen);
+                          },
+                          child: const CustomText(
+                            text: 'Confirm',
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          )),
                     ],
                   ),
                   const SizedBox(height: 32),
