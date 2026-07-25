@@ -1,7 +1,5 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter_batch16/export.dart';
 import 'package:flutter_batch16/routes.dart';
-import 'package:flutter_batch16/utils/app_colors.dart';
 
 class AddTaskScreen extends StatefulWidget {
   const AddTaskScreen({super.key});
@@ -68,6 +66,4 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       ),
     );
   }
-
-
 }
