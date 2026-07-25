@@ -14,7 +14,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: const TaskAppBar(
         isProfilePage: true,
       ),
@@ -121,6 +120,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ElevatedButton(
                         onPressed: () {
                           print('login Press');
+                          Navigator.pushNamed(
+                            context,
+                            AppRoutes.mainNavBarScreen,
+                          );
                         },
                         child: const Icon(
                           Icons.login,
