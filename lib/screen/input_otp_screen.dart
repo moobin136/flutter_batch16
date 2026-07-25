@@ -42,7 +42,7 @@ class _InputOTPScreenState extends State<InputOTPScreen> {
                   const SizedBox(height: 16),
                   Column(
                     children: [
-                      Pinput(
+                      const Pinput(
                         length: 6,
                         autofocus: true,
                         // focusedPinTheme: PinTheme(
