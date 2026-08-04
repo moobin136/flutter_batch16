@@ -37,7 +37,7 @@ class TaskCountCard extends StatelessWidget {
                   fSiz: 16,
                   fontWeight: FontWeight.w700,
                 ),
-              )
+              ),
             ],
           ),
         ),

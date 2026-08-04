@@ -1,33 +1,83 @@
-import 'package:flutter_batch16/model/api_response/api_response.dart';
-import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+import 'package:http/http.dart';
+import 'package:logger/logger.dart';
+
+import '../model/api_response/api_response.dart';
 
 class ApiCaller {
-  Future<void> getData(String URL) async {
-    try {
-      Uri url = Uri.parse(URL);
-      http.Response response = await http.get(url, headers: {
-        'Content-Type': 'application/json',
-      });
+  static final Logger _logger = Logger();
 
-      print('Response status: ${response.statusCode}');
+  static Future<ApiResponse> getRequest({required String URL}) async {
+    try {
+      Uri uri = Uri.parse(URL);
+
+      _logger.i(URL);
+
+      Response response = await get(uri, headers: {'token': ''});
+
+      _logger.i(response.body);
 
       if (response.statusCode == 200) {
-        ApiResponse apiResponse = ApiResponse(
-            responseCode: response.statusCode,
-            responseData: response.body,
-            isSuccess: true,
-            errorMessage: null);
+        return ApiResponse(
+          responseCode: response.statusCode,
+          responseData: jsonDecode(response.body),
+          isSuccess: true,
+        );
       } else {
-        ApiResponse apiResponse = ApiResponse(
+        return ApiResponse(
             responseCode: response.statusCode,
-            responseData: null,
+            responseData: jsonDecode(response.body),
             isSuccess: false,
-            errorMessage:
-                'Error occurred with status code: ${response.statusCode}');
-        print('Error occurred with status code: ${response.statusCode}');
+            errorMessage: jsonDecode(response.body));
       }
     } catch (e) {
-      print(e.toString());
+      return ApiResponse(
+          responseCode: -1,
+          responseData: null,
+          isSuccess: false,
+          errorMessage: e.toString());
+    }
+  }
+
+  static Future<ApiResponse> postRequest(
+      {required String URL, Map<String, dynamic>? body}) async {
+    try {
+      Uri uri = Uri.parse(URL);
+
+      _logger.i(URL);
+
+      Response response = await post(
+        uri,
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          'token': ''
+        },
+        body: body != null ? jsonEncode(body) : null,
+      );
+
+      _logger.i(response.body);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return ApiResponse(
+          responseCode: response.statusCode,
+          responseData: jsonDecode(response.body),
+          isSuccess: true,
+        );
+      } else {
+        return ApiResponse(
+            responseCode: response.statusCode,
+            responseData: jsonDecode(response.body),
+            isSuccess: false,
+            errorMessage: jsonDecode(response.body));
+      }
+    } catch (e) {
+      return ApiResponse(
+          responseCode: -1,
+          responseData: null,
+          isSuccess: false,
+          errorMessage: e.toString());
     }
   }
 }
