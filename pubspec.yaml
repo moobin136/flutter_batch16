@@ -23,6 +23,11 @@ dependencies:
   http: ^1.1.0
   #Logger
   logger: ^2.7.0
+  #path: ^1.9.1
+  path: ^1.9.1
+  #sqflite:
+  sqflite:
+
 
 dev_dependencies:
   flutter_test:
