@@ -23,6 +23,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  
+                  Row(
+                    children: [
+                      Container(
+                        child: ClipRect(
+                          child: Icon(Icons.person),
+                        ),
+                      )
+                    ],
+                  ),
                   const CustomText(
                     text: 'Update Profile',
                     fSiz: 32,
