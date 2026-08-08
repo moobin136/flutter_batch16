@@ -14,7 +14,7 @@ class _MainNavBarScreenState extends State<MainNavBarScreen> {
     const NewTaskScreen(),
     const CompletedTaskScreen(),
     const CancelTaskScreen(),
-    const ProgressTaskScreen()
+    const ProfileScreen(),
   ];
 
   navbarSelectedIndex(int index) {
@@ -26,7 +26,11 @@ class _MainNavBarScreenState extends State<MainNavBarScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const TaskAppBar(),
+      appBar: TaskAppBar(
+        isProfilePage: (selectedIndex == 3) ? true : false,
+        isFirstPage: (selectedIndex == 0) ? true : false,
+
+      ),
       bottomNavigationBar: buildNavigationBar(),
       body: screenList[selectedIndex],
     );
@@ -50,8 +54,8 @@ class _MainNavBarScreenState extends State<MainNavBarScreen> {
           label: 'Cancel',
         ),
         NavigationDestination(
-          icon: Icon(Icons.hourglass_bottom),
-          label: 'Progress',
+          icon: Icon(Icons.person_4_outlined),
+          label: 'Profile',
         ),
       ],
     );

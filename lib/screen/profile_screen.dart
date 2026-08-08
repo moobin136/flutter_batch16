@@ -14,9 +14,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const TaskAppBar(
-        isProfilePage: true,
-      ),
       body: CustomBGSVG(
         child: Center(
           child: Padding(
