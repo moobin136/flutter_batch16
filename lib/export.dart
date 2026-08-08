@@ -19,3 +19,4 @@ export 'package:flutter_batch16/screen/profile_screen.dart';
 export 'package:flutter_batch16/screen/set_new_password_screen.dart';
 export 'package:flutter_batch16/screen/sign_up_screen.dart';
 export 'package:flutter_batch16/screen/add_task_screen.dart';
+export '../utils/app_colors.dart';

@@ -1,6 +1,8 @@
 import 'package:flutter_batch16/export.dart';
 import 'package:flutter_batch16/routes.dart';
 
+
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -30,22 +32,32 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
-    return Scaffold(
-      body: CustomBGSVG(
-        child: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Center(
-                child: SvgPicture.asset(
-                  height: 65,
-                  width: 65,
-                  AssetsPath.logo,
-                ),
+    return CustomBGSVG(
+      child: Center(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.task,
+              size: size.height * 0.068,
+              color: AppColors.primaryAppColor,
+            ),
+            SizedBox(width: 10),
+            Text(
+              'TaskManager',
+              style: TextStyle(
+                fontSize: size.height * 0.038,
+                color: Colors.black,
+                fontWeight: FontWeight.w800,
               ),
-            ],
-          ),
+            ),
+            // CustomText(
+            //   text: 'TaskManager',
+            //   fSiz: ,
+            //   fontWeight: FontWeight.w800,
+            // )
+          ],
         ),
       ),
     );
