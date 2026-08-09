@@ -26,7 +26,7 @@ class AppRoutes {
       mainNavBarScreen: (context) => const MainNavBarScreen(),
       completedTaskScreen: (context) => const CancelTaskScreen(),
       cancelTaskScreen: (context) => const CancelTaskScreen(),
-      newTaskScreen: (context) => const NewTaskScreen(),
+      newTaskScreen: (context) => const AllTasks(),
       progressTaskScreen: (context) => const ProgressTaskScreen(),
       forgetPasswordEmailScreen: (context) => const ForgetPasswordEmailScreen(),
       inputOTPScreen: (context) => const InputOTPScreen(),

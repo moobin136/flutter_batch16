@@ -1,35 +1,18 @@
 import 'package:flutter_batch16/export.dart';
-import 'package:flutter_batch16/routes.dart';
-import 'package:flutter_batch16/screen/widget/task_count_card.dart';
-import 'package:flutter_batch16/utils/app_colors.dart';
 
-import '../core/global_widgets/task_card_common.dart';
 
-class NewTaskScreen extends StatefulWidget {
-  const NewTaskScreen({super.key});
+class AllTasks extends StatefulWidget {
+  const AllTasks({super.key});
 
   @override
-  State<NewTaskScreen> createState() => _NewTaskScreenState();
+  State<AllTasks> createState() => _AllTasksState();
 }
 
-class _NewTaskScreenState extends State<NewTaskScreen> {
+class _AllTasksState extends State<AllTasks> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.primaryAppColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(100),
-        ),
-        onPressed: () {
-          Navigator.pushNamed(context, AppRoutes.addTaskScreen);
-        },
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-          size: 30,
-        ),
-      ),
+      floatingActionButton: _buildFloatingActionButton(context),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -61,8 +44,25 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
     );
   }
 
+  Widget _buildFloatingActionButton(BuildContext context) {
+    return FloatingActionButton(
+      backgroundColor: AppColors.primaryAppColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(100),
+      ),
+      onPressed: () {
+        Navigator.pushNamed(context, AppRoutes.addTaskScreen);
+      },
+      child: const Icon(
+        Icons.add,
+        color: Colors.white,
+        size: 30,
+      ),
+    );
+  }
+
   Widget _tasCountBar() {
-    return Row(
+    return const Row(
       children: [
         TaskCountCard(
           tasName: 'Completed',

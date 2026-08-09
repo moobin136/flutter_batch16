@@ -9,9 +9,20 @@ class AddTaskScreen extends StatefulWidget {
 }
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
+  // List<Widget> screenList = <Widget>[
+  //   const NewTaskScreen(),
+  //   const CompletedTaskScreen(),
+  //   const CancelTaskScreen(),
+  //   const ProfileScreen(),
+  // ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.primaryAppColor,
+      ),
+      // bottomNavigationBar: buildNavigationBar(),
       body: CustomBGSVG(
         child: Center(
           child: Padding(
@@ -66,4 +77,28 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       ),
     );
   }
+
+  // Widget buildNavigationBar() {
+  //   return NavigationBar(
+  //     selectedIndex: 2,
+  //     destinations: const [
+  //       NavigationDestination(
+  //         icon: Icon(Icons.comment),
+  //         label: 'New',
+  //       ),
+  //       NavigationDestination(
+  //         icon: Icon(Icons.done_all),
+  //         label: 'Complete',
+  //       ),
+  //       NavigationDestination(
+  //         icon: Icon(Icons.delete_outline),
+  //         label: 'Cancel',
+  //       ),
+  //       NavigationDestination(
+  //         icon: Icon(Icons.person_4_outlined),
+  //         label: 'Profile',
+  //       ),
+  //     ],
+  //   );
+  // }
 }

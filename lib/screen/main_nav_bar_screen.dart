@@ -11,8 +11,8 @@ class _MainNavBarScreenState extends State<MainNavBarScreen> {
   int selectedIndex = 0;
 
   List<Widget> screenList = <Widget>[
-    const NewTaskScreen(),
-    const CompletedTaskScreen(),
+    const AllTasks(),
+    const TaskHomeScreen(),
     const CancelTaskScreen(),
     const ProfileScreen(),
   ];
@@ -29,7 +29,6 @@ class _MainNavBarScreenState extends State<MainNavBarScreen> {
       appBar: TaskAppBar(
         isProfilePage: (selectedIndex == 3) ? true : false,
         isFirstPage: (selectedIndex == 0) ? true : false,
-
       ),
       bottomNavigationBar: buildNavigationBar(),
       body: screenList[selectedIndex],
@@ -43,7 +42,7 @@ class _MainNavBarScreenState extends State<MainNavBarScreen> {
       destinations: const [
         NavigationDestination(
           icon: Icon(Icons.comment),
-          label: 'New',
+          label: 'All Tasks',
         ),
         NavigationDestination(
           icon: Icon(Icons.done_all),

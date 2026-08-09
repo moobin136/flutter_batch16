@@ -8,7 +8,7 @@ export '../../utils/assets_path.dart';
 export '../core/global_widgets/custom_bg_svg.dart';
 export 'package:flutter_batch16/screen/cancel_task_screen.dart';
 export 'package:flutter_batch16/screen/completed_task_screen.dart';
-export 'package:flutter_batch16/screen/new_task_screen.dart';
+export 'package:flutter_batch16/screen/all_tasks_screen.dart';
 export 'package:flutter_batch16/screen/progress_task_screen.dart';
 export 'package:flutter_batch16/screen/widget/task_app_bar.dart';
 export 'package:flutter_batch16/screen/forget_password_email_screen.dart';
@@ -20,3 +20,7 @@ export 'package:flutter_batch16/screen/set_new_password_screen.dart';
 export 'package:flutter_batch16/screen/sign_up_screen.dart';
 export 'package:flutter_batch16/screen/add_task_screen.dart';
 export '../utils/app_colors.dart';
+export 'package:flutter_batch16/routes.dart';
+export 'package:flutter_batch16/screen/widget/task_count_card.dart';
+
+export '../core/global_widgets/task_card_common.dart';
