@@ -145,7 +145,6 @@ class _TaskHomeScreenState extends State<TaskHomeScreen> {
                         ),
                       ),
                     ),
-                    // Action Buttons (Edit & Delete)
                     Row(
                       children: [
                         IconButton(
