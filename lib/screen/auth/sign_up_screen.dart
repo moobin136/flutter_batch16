@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_batch16/export.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -128,9 +129,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
           singUp();
           // Navigator.pushReplacementNamed(
           //     context, AppRoutes.loginScreen);
-          print('login Press');
+          if (kDebugMode) {
+            print('login Press');
+          }
         } else {
-          print('Error ');
+          if (kDebugMode) {
+            print('Error ');
+          }
         }
       },
       child: const Icon(
