@@ -11,16 +11,21 @@ export 'package:flutter_batch16/screen/completed_task_screen.dart';
 export 'package:flutter_batch16/screen/all_tasks_screen.dart';
 export 'package:flutter_batch16/screen/progress_task_screen.dart';
 export 'package:flutter_batch16/screen/widget/task_app_bar.dart';
-export 'package:flutter_batch16/screen/forget_password_email_screen.dart';
-export 'package:flutter_batch16/screen/input_otp_screen.dart';
-export 'package:flutter_batch16/screen/login_screen.dart';
+export 'package:flutter_batch16/screen/auth/forget_password_email_screen.dart';
+export 'package:flutter_batch16/screen/auth/input_otp_screen.dart';
+export 'package:flutter_batch16/screen/auth/login_screen.dart';
 export 'package:flutter_batch16/screen/main_nav_bar_screen.dart';
 export 'package:flutter_batch16/screen/profile_screen.dart';
-export 'package:flutter_batch16/screen/set_new_password_screen.dart';
-export 'package:flutter_batch16/screen/sign_up_screen.dart';
+export 'package:flutter_batch16/screen/auth/set_new_password_screen.dart';
+export 'package:flutter_batch16/screen/auth/sign_up_screen.dart';
 export 'package:flutter_batch16/screen/add_task_screen.dart';
 export '../utils/app_colors.dart';
 export 'package:flutter_batch16/routes.dart';
 export 'package:flutter_batch16/screen/widget/task_count_card.dart';
 
 export '../core/global_widgets/task_card_common.dart';
+
+export 'package:flutter/gestures.dart';
+export 'package:flutter_batch16/core/global_widgets/custom_snack_bar.dart';
+export 'package:flutter_batch16/data/network/network.dart';
+export 'package:flutter_batch16/utils/app_url.dart';

@@ -1,7 +1,7 @@
-import 'package:flutter/gestures.dart';
+
 import 'package:flutter_batch16/export.dart';
-import 'package:flutter_batch16/routes.dart';
-import 'package:flutter_batch16/utils/app_colors.dart';
+
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -11,6 +11,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  @override
+  void dispose() {
+    _emailLoginTEController.clear();
+    _passwordLoginTEController.clear();
+    super.dispose();
+  }
+
   final GlobalKey<FormState> _gloBalLoginKey = GlobalKey<FormState>();
   final TextEditingController _emailLoginTEController = TextEditingController();
   final TextEditingController _passwordLoginTEController =
@@ -66,9 +73,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         ElevatedButton(
                           onPressed: () {
                             if (_gloBalLoginKey.currentState!.validate()) {
+                              login();
+                              // Navigator.pushReplacementNamed(
+                              //     context, AppRoutes.mainNavBarScreen);
                               print('login Press');
-                              Navigator.pushReplacementNamed(
-                                  context, AppRoutes.mainNavBarScreen);
                             } else {
                               // null;
                             }
@@ -135,6 +143,22 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  login() async {
+    final result = await NetworkCaller.postNetwork(AppUrl.login, body: {
+      "email": _emailLoginTEController.text.toString(),
+      "password": _passwordLoginTEController.text.trim().toString(),
+    });
+    if (result == true) {
+      CustomSnackBar.show(context: context, message: 'Login Success full');
+      Navigator.pushReplacementNamed(context, AppRoutes.mainNavBarScreen);
+    } else {
+      CustomSnackBar.show(
+          context: context,
+          message: 'status : ${result['status']}\n${result['data']}',
+          isError: true);
+    }
   }
 
   signUp() {

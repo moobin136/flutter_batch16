@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+
 class AppColors {
   static const Color primaryAppColor = Color(0xff21BF73);
   static const Color cancelTaskColor = Color(0xffF15056);
@@ -10,4 +12,5 @@ class AppColors {
   static const Color ediIconColor = Color(0xff79D8AB);
   static const Color photoBgContainerColor = Color(0xff79D8AB);
   static const Color profileContainerColor = Color(0xff666666);
+  static const Color white = Colors.white;
 }
