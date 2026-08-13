@@ -27,5 +27,5 @@ export '../core/global_widgets/task_card_common.dart';
 
 export 'package:flutter/gestures.dart';
 export 'package:flutter_batch16/core/global_widgets/custom_snack_bar.dart';
-export 'package:flutter_batch16/data/network/network.dart';
+export 'package:flutter_batch16/data/network/network_caller.dart';
 export 'package:flutter_batch16/utils/app_url.dart';

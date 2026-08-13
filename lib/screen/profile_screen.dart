@@ -1,5 +1,5 @@
 import 'package:flutter_batch16/export.dart';
-import 'package:flutter_batch16/routes.dart';
+import 'package:flutter_batch16/utils/validator.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -9,6 +9,15 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final TextEditingController _emailTEController = TextEditingController();
+  final TextEditingController _firstNameTEController = TextEditingController();
+  final TextEditingController _lastNameTEController = TextEditingController();
+  final TextEditingController _phonNumberTEController = TextEditingController();
+  final TextEditingController _passwordTEController = TextEditingController();
+
+  final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,11 +36,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () {
-                      print('login Press');
-                      Navigator.pushNamed(
-                        context,
-                        AppRoutes.mainNavBarScreen,
-                      );
+                      print('Save Press');
+                      if (_globalKey.currentState!.validate()) {
+                        Navigator.pushNamed(
+                          context,
+                          AppRoutes.mainNavBarScreen,
+                        );
+                      } else {
+                        CustomSnackBar.show(
+                          context: context,
+                          message: 'Update Your Profile',
+                          isError: true,
+                        );
+
+                        //ABCD@GAMIL.COM
+                      }
                     },
                     child: const CustomText(
                       text: 'Save Profile',
@@ -61,7 +80,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Row _imageAndProfileInfo() {
+  Widget _imageAndProfileInfo() {
     return Row(
       children: [
         Container(
@@ -101,35 +120,50 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildForm(BuildContext context) {
     return Form(
+      key: _globalKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           TextFormField(
+            validator: (value) =>
+                Validator.validator('Input your New Email', value),
+            controller: _emailTEController,
             decoration: const InputDecoration(
               labelText: 'E-mail',
             ),
           ),
           const SizedBox(height: 16),
           TextFormField(
+            validator: (value) =>
+                Validator.validator('Input New F Name', value),
+            controller: _firstNameTEController,
             decoration: const InputDecoration(
               labelText: 'First Name',
             ),
           ),
           const SizedBox(height: 16),
           TextFormField(
+            validator: (value) =>
+                Validator.validator('Input New L Name', value),
+            controller: _lastNameTEController,
             decoration: const InputDecoration(
               labelText: 'Last name',
             ),
           ),
           const SizedBox(height: 16),
           TextFormField(
+            validator: (value) =>
+                Validator.validator('Input New Valid Phn Num', value),
+            controller: _phonNumberTEController,
             decoration: const InputDecoration(
               labelText: 'Mobile',
             ),
           ),
           const SizedBox(height: 16),
           TextFormField(
+            validator: (value) => Validator.validator('Strong Password', value),
+            controller: _passwordTEController,
             decoration: const InputDecoration(
               labelText: 'Password',
             ),

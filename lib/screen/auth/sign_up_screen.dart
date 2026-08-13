@@ -11,11 +11,11 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   @override
   void dispose() {
-    _firstNameSignTEController.clear();
-    _lastNameSignTEController.clear();
-    _emailSignTEController.clear();
-    _passwordSignTEController.clear();
-    _phonNumberSignTEController.clear();
+    _firstNameSignTEController.dispose();
+    _lastNameSignTEController.dispose();
+    _emailSignTEController.dispose();
+    _passwordSignTEController.dispose();
+    _phonNumberSignTEController.dispose();
     super.dispose();
   }
 

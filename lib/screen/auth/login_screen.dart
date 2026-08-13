@@ -13,8 +13,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   void dispose() {
-    _emailLoginTEController.clear();
-    _passwordLoginTEController.clear();
+    _emailLoginTEController.dispose();
+    _passwordLoginTEController.dispose();
     super.dispose();
   }
 
