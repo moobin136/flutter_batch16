@@ -1,31 +1,49 @@
+// lib/core/services/shared_pref_service.dart
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefService {
+  SharedPrefService._();
+
+  static const String _firstNameKey = 'user_first_name';
+  static const String _lastNameKey = 'user_last_name';
+  static const String _emailKey = 'user_email';
+  static const String _mobileKey = 'user_mobile';
   static const String _tokenKey = 'user_token';
-  static const String _isLoggedInKey = 'is_logged_in';
 
-  // Save Auth Data
-  static Future<void> saveAuthData(String token) async {
+  static Future<bool> saveUserData({
+    required String firstName,
+    required String lastName,
+    required String email,
+    required String mobile,
+    required String token,
+    //
+  }) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_tokenKey, token);
-    await prefs.setBool(_isLoggedInKey, true);
+    final results = await Future.wait([
+      prefs.setString(_firstNameKey, firstName),
+      prefs.setString(_lastNameKey, lastName),
+      prefs.setString(_emailKey, email),
+      prefs.setString(_mobileKey, mobile),
+      prefs.setString(_tokenKey, token),
+    ]);
+
+    return results.every((element) => element == true);
   }
 
-  // Get User Token
-  static Future<String?> getToken() async {
+  static Future<Map<String, String?>> getUserData() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(_tokenKey);
+    return {
+      'firstName': prefs.getString(_firstNameKey),
+      'lastName': prefs.getString(_lastNameKey),
+      'email': prefs.getString(_emailKey),
+      'mobile': prefs.getString(_mobileKey),
+      'token': prefs.getString(_tokenKey),
+    };
   }
 
-  // Check Login Status
-  static Future<bool> isLoggedIn() async {
+  static Future<bool> clearAllData() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(_isLoggedInKey) ?? false;
-  }
-
-  // Clear Session (Logout)
-  static Future<void> clearAuthData() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.clear();
+    return await prefs.clear();
   }
 }

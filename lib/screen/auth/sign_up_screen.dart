@@ -188,13 +188,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
       "password": _passwordSignTEController.text.trim().toString(),
     });
 
-    if (result == true) {
+    if (result["status"] == "success") {
+      print(result['data']);
       CustomSnackBar.show(
         context: context,
         message: 'Registration Successful ',
       );
       Navigator.pushReplacementNamed(context, AppRoutes.loginScreen);
     } else {
+      print(result['data']);
       CustomSnackBar.show(
         context: context,
         message: 'status : ${result['status']}\n${result['data']}',

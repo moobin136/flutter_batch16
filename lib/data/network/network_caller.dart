@@ -51,7 +51,7 @@ class NetworkCaller {
       final jsonDecodeData = jsonDecode(response.body);
 
       if (response.statusCode == 200) {
-        return true;
+        return jsonDecodeData;
       } else {
         return jsonDecodeData;
       }

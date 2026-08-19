@@ -143,18 +143,43 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   login() async {
-    final result = await NetworkCaller.postNetwork(AppUrl.login, body: {
-      "email": _emailLoginTEController.text.toString(),
-      "password": _passwordLoginTEController.text.trim().toString(),
-    });
-    if (result == true) {
-      CustomSnackBar.show(context: context, message: 'Login Success full');
-      Navigator.pushReplacementNamed(context, AppRoutes.mainNavBarScreen);
+    final result = await NetworkCaller.postNetwork(
+      AppUrl.login,
+      body: {
+        "email": _emailLoginTEController.text.trim(),
+        "password": _passwordLoginTEController.text.trim(),
+      },
+    );
+
+    if (result != null && result["status"] == "success") {
+      final jsonToInfo = result['data'];
+
+      // Await async preference methods
+      await SharedPrefService.saveUserData(
+        email: jsonToInfo['email'],
+        firstName: jsonToInfo['firstName'],
+        lastName: jsonToInfo['lastName'],
+        mobile: jsonToInfo['mobile'],
+        token: result['token'],
+      );
+
+      await SharedPrefService.getUserData();
+      print('email : ${AuthController.email}');
+      print('token : ${AuthController.token}');
+
+      if (mounted) {
+        CustomSnackBar.show(context: context, message: 'Login Successful');
+        Navigator.pushReplacementNamed(context, AppRoutes.mainNavBarScreen);
+      }
     } else {
-      CustomSnackBar.show(
+      if (mounted) {
+        CustomSnackBar.show(
           context: context,
-          message: 'status : ${result['status']}\n${result['data']}',
-          isError: true);
+          message:
+              'status : ${result?['status'] ?? 'Error'}\n${result?['data'] ?? 'Something went wrong'}',
+          isError: true,
+        );
+      }
     }
   }
 

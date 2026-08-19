@@ -16,7 +16,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController _passwordTEController = TextEditingController();
 
   final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
-  
 
   @override
   Widget build(BuildContext context) {
@@ -59,13 +58,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   const SizedBox(height: 16),
                   ElevatedButton(
-                    onPressed: () {
-                      print('Log Out');
-                      Navigator.pushNamed(
-                        context,
-                        AppRoutes.loginScreen,
-                      );
-                    },
+                    onPressed: logOut,
                     child: const CustomText(
                       text: 'Log Out',
                       color: AppColors.white,
@@ -173,8 +166,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  logIn() {
-    Navigator.pushReplacementNamed(context, AppRoutes.loginScreen);
+  Future<void> logOut() async {
+
+    await AuthController.clearAuthData();
+
+    print('Clear হওয়ার পর Email: ${AuthController.email}');
+    print('Clear হওয়ার পর Token: ${AuthController.token}');
+
+    // ২. লগইন স্ক্রিনে নিয়ে যাওয়া এবং আগের সব রুট নেভিগেশন হিস্ট্রি মুছে ফেলা
+    if (mounted) {
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        AppRoutes.loginScreen,
+        (route) => false,
+      );
+    }
   }
 
   onUpdateProfile() {

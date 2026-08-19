@@ -1,7 +1,4 @@
 import 'package:flutter_batch16/export.dart';
-import 'package:flutter_batch16/routes.dart';
-
-
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -11,22 +8,26 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  Future<void> _moveToNextScreen() async {
-    Future.delayed(
-      const Duration(seconds: 2),
-      () {
-        Navigator.pushReplacementNamed(
-          context,
-          AppRoutes.loginScreen,
-        );
-      },
-    );
-  }
-
   @override
   void initState() {
     super.initState();
     _moveToNextScreen();
+  }
+
+  Future<void> _moveToNextScreen() async {
+    await Future.delayed(const Duration(seconds: 2));
+
+    bool isLoggedIn = await AuthController.isLoggedIn();
+
+    print('Email: ${AuthController.email}');
+    print('Token: ${AuthController.token}');
+
+    if (mounted) {
+      Navigator.pushReplacementNamed(
+        context,
+        isLoggedIn ? AppRoutes.mainNavBarScreen : AppRoutes.loginScreen,
+      );
+    }
   }
 
   @override
@@ -43,7 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
               size: size.height * 0.068,
               color: AppColors.primaryAppColor,
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Text(
               'TaskManager',
               style: TextStyle(
@@ -52,11 +53,6 @@ class _SplashScreenState extends State<SplashScreen> {
                 fontWeight: FontWeight.w800,
               ),
             ),
-            // CustomText(
-            //   text: 'TaskManager',
-            //   fSiz: ,
-            //   fontWeight: FontWeight.w800,
-            // )
           ],
         ),
       ),
