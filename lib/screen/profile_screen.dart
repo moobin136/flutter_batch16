@@ -167,11 +167,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> logOut() async {
+    final AuthController auth = AuthController.authObject;
+    auth.getUserData();
 
-    await AuthController.clearAuthData();
+    await auth.clearUserData();
 
-    print('Clear হওয়ার পর Email: ${AuthController.email}');
-    print('Clear হওয়ার পর Token: ${AuthController.token}');
+    print('Clear হওয়ার পর Email: ${auth.email0}');
+    print('Clear হওয়ার পর Token: ${auth.token0}');
 
     // ২. লগইন স্ক্রিনে নিয়ে যাওয়া এবং আগের সব রুট নেভিগেশন হিস্ট্রি মুছে ফেলা
     if (mounted) {

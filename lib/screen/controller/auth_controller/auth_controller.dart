@@ -1,72 +1,64 @@
-
-
-
-
-
-
-import '../../../core/network/shared_pref_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController {
-  // Private Constructor (Prevent Instantiation)
   AuthController._();
 
-  // In-Memory Cached Variables
-  static String? firstName;
-  static String? lastName;
-  static String? email;
-  static String? mobile;
-  static String? token;
+  static final AuthController authObject = AuthController._();
+  String? email0, firstName0, lastName0, mobile0, token0;
 
-  /// Check if user has a valid active session
-  static Future<bool> isLoggedIn() async {
-    await loadAuthData();
-    return token != null && token!.isNotEmpty;
-  }
 
-  /// Save session data to both Local Storage & In-Memory State
-  static Future<void> saveAuthData({
-    required String? userFirstName,
-    required String? userLastName,
-    required String? userEmail,
-    required String? userMobile,
-    required String? userToken,
+  Future<void> saveDataUser({
+    required String email,
+    required String firstName,
+    required String lastName,
+    required String mobile,
+    required String token,
   }) async {
-    // 1. Assign to In-Memory Variables
-    firstName = userFirstName ?? '';
-    lastName = userLastName ?? '';
-    email = userEmail ?? '';
-    mobile = userMobile ?? '';
-    token = userToken ?? '';
+    final SharedPreferences sharedPreferences =
+    await SharedPreferences.getInstance();
 
-    // 2. Persist to Local Storage
-    await SharedPrefService.saveUserData(
-      firstName: firstName!,
-      lastName: lastName!,
-      email: email!,
-      mobile: mobile!,
-      token: token!,
-    );
+    await sharedPreferences.setString('email', email);
+    await sharedPreferences.setString('firstName', firstName);
+    await sharedPreferences.setString('lastName', lastName);
+    await sharedPreferences.setString('mobile', mobile);
+    await sharedPreferences.setString('token', token);
+
+    email0 = email;
+    firstName0 = firstName;
+    lastName0 = lastName;
+    mobile0 = mobile;
+    token0 = token;
   }
 
-  /// Read stored data from Local Storage into In-Memory State
-  static Future<void> loadAuthData() async {
-    final data = await SharedPrefService.getUserData();
+  // ২. ডাটা রিড করার মেথড (প্যারামিটার তুলে দিয়ে সরাসরি Key বসানো হয়েছে)
+  Future<void> getUserData() async {
+    final SharedPreferences sharedPreferences =
+    await SharedPreferences.getInstance();
 
-    firstName = data['firstName'];
-    lastName = data['lastName'];
-    email = data['email'];
-    mobile = data['mobile'];
-    token = data['token'];
+    email0 = sharedPreferences.getString('email');
+    firstName0 = sharedPreferences.getString('firstName');
+    lastName0 = sharedPreferences.getString('lastName');
+    mobile0 = sharedPreferences.getString('mobile');
+    token0 = sharedPreferences.getString('token');
   }
 
-  /// Clear session state from Memory and Storage (Logout)
-  static Future<void> clearAuthData() async {
-    await SharedPrefService.clearAllData();
+  // ৩. ডাটা ক্লিয়ার করার মেথড
+  Future<void> clearUserData() async {
+    final SharedPreferences sharedPreferences =
+    await SharedPreferences.getInstance();
 
-    firstName = null;
-    lastName = null;
-    email = null;
-    mobile = null;
-    token = null;
+    await sharedPreferences.clear();
+
+    email0 = null;
+    firstName0 = null;
+    lastName0 = null;
+    mobile0 = null;
+    token0 = null;
+  }
+
+  // ৪. লগইন স্ট্যাটাস চেক (আগে getUserData কল করা হচ্ছে)
+  Future<bool> isLogin() async {
+    await getUserData(); // Local Storage থেকে ডাটা মেমোরিতে লোড করে নেবে
+    return token0 != null && token0!.isNotEmpty;
   }
 }

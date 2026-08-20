@@ -154,8 +154,10 @@ class _LoginScreenState extends State<LoginScreen> {
     if (result != null && result["status"] == "success") {
       final jsonToInfo = result['data'];
 
+      final AuthController auth = AuthController.authObject;
+
       // Await async preference methods
-      await SharedPrefService.saveUserData(
+      await auth.saveDataUser(
         email: jsonToInfo['email'],
         firstName: jsonToInfo['firstName'],
         lastName: jsonToInfo['lastName'],
@@ -163,9 +165,9 @@ class _LoginScreenState extends State<LoginScreen> {
         token: result['token'],
       );
 
-      await SharedPrefService.getUserData();
-      print('email : ${AuthController.email}');
-      print('token : ${AuthController.token}');
+      await auth.getUserData;
+      print('email : ${auth.email0}');
+      print('token : ${auth.token0}');
 
       if (mounted) {
         CustomSnackBar.show(context: context, message: 'Login Successful');

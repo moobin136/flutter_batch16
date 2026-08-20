@@ -16,18 +16,19 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _moveToNextScreen() async {
     await Future.delayed(const Duration(seconds: 2));
+    final AuthController auth = AuthController.authObject;
 
-    bool isLoggedIn = await AuthController.isLoggedIn();
+    // ১. আগে isLogin() রান হবে, যা SharedPreferences থেকে ডাটা লোড করবে
+    bool isLoggedIn = await auth.isLogin();
 
-    print('Email: ${AuthController.email}');
-    print('Token: ${AuthController.token}');
+    // ২. ডাটা লোড হওয়ার পর প্রিন্ট করায় এখন সঠিক Email ও Token দেখাবে
+    print('Email: ${auth.email0}');
+    print('Token: ${auth.token0}');
 
-    if (mounted) {
-      Navigator.pushReplacementNamed(
-        context,
-        isLoggedIn ? AppRoutes.mainNavBarScreen : AppRoutes.loginScreen,
-      );
-    }
+    Navigator.pushReplacementNamed(
+      context,
+      isLoggedIn ? AppRoutes.mainNavBarScreen : AppRoutes.loginScreen,
+    );
   }
 
   @override
