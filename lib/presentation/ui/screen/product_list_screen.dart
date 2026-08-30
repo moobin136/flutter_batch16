@@ -14,19 +14,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const AddProductScreen()));
-        },
-        child: const Icon(Icons.add),
-      ),
-      appBar: AppBar(
-        title: const Text('Product List'),
-        backgroundColor: Colors.blue,
-      ),
+      floatingActionButton: _buildFloatingButton(context),
+      appBar: _buildAppBar(),
       body: ListView.builder(
         itemCount: 10,
         itemBuilder: (BuildContext context, int index) {
@@ -47,7 +36,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
               showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
-                  title: Text('Are you sure you want to delete this product?'),
+                  title: const Text(
+                      'Are you sure you want to delete this product?'),
                   actions: [
                     TextButton(
                       onPressed: () {
@@ -57,7 +47,23 @@ class _ProductListScreenState extends State<ProductListScreen> {
                     ),
                     TextButton(
                       onPressed: () {
-                        // Handle delete action
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            elevation: 0,
+                            backgroundColor: Color(0xC6D53232),
+                            content: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Product deleted successfully',
+                                style: TextStyle(
+                                  color: Color(0xFFFDFDFD),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
                         Navigator.pop(context);
                       },
                       child: const Text('Delete'),
@@ -69,6 +75,27 @@ class _ProductListScreenState extends State<ProductListScreen> {
           );
         },
       ),
+    );
+  }
+
+  PreferredSizeWidget _buildAppBar() {
+    return AppBar(
+      title: const Text('Product List'),
+      backgroundColor: Colors.blue,
+    );
+  }
+
+  Widget _buildFloatingButton(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const AddProductScreen(),
+          ),
+        );
+      },
+      child: const Icon(Icons.add),
     );
   }
 }

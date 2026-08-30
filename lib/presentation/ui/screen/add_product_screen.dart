@@ -104,18 +104,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     foregroundColor: Colors.white,
                     alignment: Alignment.center,
                   ),
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      Navigator.pop(context);
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Please fill in all fields.'),
-                          backgroundColor: Colors.red,
-                        ),
-                      );
-                    }
-                  },
+                  onPressed: () => _onTabSaveButton(),
                   child: const Text('Save'),
                 ),
               ),
@@ -124,5 +113,33 @@ class _AddProductScreenState extends State<AddProductScreen> {
         ),
       ),
     );
+  }
+
+  void _onTabSaveButton() {
+    if (_formKey.currentState!.validate()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Align(
+            alignment: Alignment.center,
+            child: Text(
+              'Product added successfully',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+      );
+      Navigator.pop(context);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please fill in all fields.'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
 }
