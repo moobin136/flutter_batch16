@@ -1,5 +1,6 @@
 import 'package:device_preview/device_preview.dart';
-import 'export.dart';
+
+import '../export.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
