@@ -7,11 +7,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      locale: DevicePreview.locale(context),
-      builder: DevicePreview.appBuilder,
-      debugShowCheckedModeBanner: false,
-      home: const ProductListScreen(),
+    return ChangeNotifierProvider(
+      create: (_) => TaskProvider(),
+      child: MaterialApp(
+        locale: DevicePreview.locale(context),
+        builder: DevicePreview.appBuilder,
+        debugShowCheckedModeBanner: false,
+        home: const TaskManagerScreen(),
+      ),
     );
   }
 }
