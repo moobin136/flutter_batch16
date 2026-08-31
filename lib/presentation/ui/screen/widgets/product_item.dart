@@ -9,62 +9,125 @@ class ProductItem extends StatelessWidget {
     this.productPrice,
     this.onEdit,
     this.onDelete,
+    this.imageLink =
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTptiPMNaFbvYIxmIbWOqHC2g52am1Zrvchbxhof2cz6Q&s=10',
+    this.productUnitPrice = 0,
+    this.total = 00,
   });
 
   final String? productName;
   final String? productCode;
   final int? productQuantity;
+  final int? productUnitPrice;
+  final double? total;
   final double? productPrice;
   final VoidCallback? onEdit;
   final VoidCallback? onDelete;
+
+  final String? imageLink;
 
   @override
   Widget build(BuildContext context) {
     return Card(
       color: Colors.blue[50],
-      child: ListTile(
-        title: Text('Product Name: $productName'),
-        subtitle: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
           children: [
-            Text('Product Code: $productCode'),
-            Text('Product Quantity: $productQuantity'),
-            Text('Product Price: $productPrice'),
-            Divider(color: Colors.grey[300], thickness: 1),
-            Row(
-              children: [
-                const Spacer(),
-                TextButton.icon(
-                  icon: const Icon(
-                    Icons.edit,
-                    color: Colors.blue,
-                  ),
-                  onPressed: () {
-                    onEdit!();
-                  },
-                  label: const Text(
-                    'Edit',
-                    style: TextStyle(color: Colors.blue),
-                  ),
-                ),
-                TextButton.icon(
-                  onPressed: () {
-                    onDelete!();
-                  },
-                  icon: const Icon(
-                    Icons.delete,
-                    color: Colors.red,
-                  ),
-                  label: const Text(
-                    'Delete',
-                    style: TextStyle(
-                      color: Colors.red,
+            Image.network(imageLink!),
+            Align(
+              alignment: AlignmentGeometry.center,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  FittedBox(
+                    child: Text(
+                      productName ?? 'null',
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                  FittedBox(
+                    child: Text(
+                      'Product Code : $productCode',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        // fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  FittedBox(
+                    child: Text(
+                      'Qut : $productQuantity',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        // fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  FittedBox(
+                    child: Text(
+                      'Price : $productPrice',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        // fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  FittedBox(
+                    child: Text(
+                      'Unit Price : $productUnitPrice',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        // fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  FittedBox(
+                    child: Text(
+                      'Total : $total',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        // fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: FittedBox(
+                child: Row(
+                  children: [
+                    TextButton.icon(
+                      onPressed: onEdit,
+                      label: const Text('Edit'),
+                      icon: const Icon(
+                        Icons.edit,
+                        color: Colors.green,
+                      ),
+                    ),
+                    TextButton.icon(
+                      onPressed: onDelete,
+                      label: const Text('Deleted'),
+                      icon: const Icon(
+                        Icons.delete_outline,
+                        color: Colors.red,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
           ],
         ),
       ),
