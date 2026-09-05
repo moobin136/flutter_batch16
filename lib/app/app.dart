@@ -11,7 +11,13 @@ class MyApp extends StatelessWidget {
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
-      home: const ProductListScreen(),
+      initialRoute: '/product-list',
+      routes: {
+        '/product-list': (context) => const ProductListScreen(),
+        '/product-add': (context) => const AddProductScreen(),
+        '/product-edit': (context) => const EditProductScreen(),
+        
+      },
     );
   }
 }

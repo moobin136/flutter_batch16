@@ -24,87 +24,89 @@ class _EditProductScreenState extends State<EditProductScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Update Product Screen',
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: Colors.blue,
+      appBar: AppBar(
+        title: const Text(
+          'Update Product Screen',
+          style: TextStyle(color: Colors.white),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: <Widget>[
-                TextFormField(
-                  controller: _nameController,
-                  decoration: const InputDecoration(
-                    labelText: 'Product Name',
-                    errorText: 'This field cannot be empty',
+        backgroundColor: Colors.blue,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: <Widget>[
+              TextFormField(
+                controller: _nameController,
+                decoration: const InputDecoration(
+                  labelText: 'Product Name',
+                  errorText: 'This field cannot be empty',
+                ),
+                validator: _validateNotEmpty,
+              ),
+              TextFormField(
+                controller: _codeController,
+                decoration: const InputDecoration(
+                  labelText: 'Product Code',
+                  errorText: 'This field cannot be empty',
+                ),
+                validator: _validateNotEmpty,
+              ),
+              TextFormField(
+                controller: _quantityController,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  labelText: 'Product Quantity',
+                  errorText: 'This field cannot be empty',
+                ),
+                validator: _validateNotEmpty,
+              ),
+              TextFormField(
+                controller: _priceController,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  labelText: 'Product Price',
+                  errorText: 'This field cannot be empty',
+                ),
+                validator: _validateNotEmpty,
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    foregroundColor: Colors.white,
                   ),
-                  validator: _validateNotEmpty,
+                  child: const Text('Update Product'),
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          backgroundColor: Colors.green,
+                          content: Text(
+                            'Product updated successfully!',
+                          ),
+                        ),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          backgroundColor: Colors.red,
+                          content: Text(
+                            'Please fill in all fields.',
+                          ),
+                        ),
+                      );
+                    }
+                  },
                 ),
-                TextFormField(
-                  controller: _codeController,
-                  decoration: const InputDecoration(
-                    labelText: 'Product Code',
-                    errorText: 'This field cannot be empty',
-                  ),
-                  validator: _validateNotEmpty,
-                ),
-                TextFormField(
-                  controller: _quantityController,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    labelText: 'Product Quantity',
-                    errorText: 'This field cannot be empty',
-                  ),
-                  validator: _validateNotEmpty,
-                ),
-                TextFormField(
-                  controller: _priceController,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    labelText: 'Product Price',
-                    errorText: 'This field cannot be empty',
-                  ),
-                  validator: _validateNotEmpty,
-                ),
-                const SizedBox(height: 20),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        foregroundColor: Colors.white,
-                      ),
-                      child: const Text('Update Product'),
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              backgroundColor: Colors.green,
-                              content: Text(
-                                'Product updated successfully!',
-                              ),
-                            ),
-                          );
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              backgroundColor: Colors.red,
-                              content: Text(
-                                'Please fill in all fields.',
-                              ),
-                            ),
-                          );
-                        }
-                      }),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
