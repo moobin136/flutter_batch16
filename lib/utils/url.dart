@@ -1,4 +1,4 @@
-class Url {
+class AppUrl {
   static const String _baseUrl = 'https://crud-api-ostad-live.onrender.com/api/v1';
   static const String readProduct = '$_baseUrl/ReadProduct';
   static const String createProduct = '$_baseUrl/CreateProduct';
