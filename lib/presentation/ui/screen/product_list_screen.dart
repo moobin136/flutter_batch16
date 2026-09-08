@@ -45,71 +45,41 @@ class _ProductListScreenState extends State<ProductListScreen> {
             : _productController.productList.isEmpty
                 ? const Center(child: Text('No Products Found!'))
                 : GridView.builder(
-                    itemCount: _productController.productList.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: size * 0.9,
-                      crossAxisSpacing: 0.20,
-                      mainAxisSpacing: 4,
-                    ),
-                    itemBuilder: (context, index) {                      
-                      final product = _productController.productList[index];
-                      return ProductItem(
-                        productName: product.productName ?? 'No Name',
-                        productCode: product.productCode?.toString() ?? 'N/A',
-                        productQuantity: product.qty ?? 0,
-                        productPrice: (product.unitPrice ?? 0).toDouble(),
-                        onEdit: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const EditProductScreen(),
-                            ),
-                          );
-                        },
-                        onDelete: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: const Text(
-                                  'Are you sure you want to delete this product?'),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text('Cancel'),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        elevation: 0,
-                                        backgroundColor: Color(0xC6D53232),
-                                        content: Align(
-                                          alignment: Alignment.center,
-                                          child: Text(
-                                            'Product deleted successfully',
-                                            style: TextStyle(
-                                              color: Color(0xFFFDFDFD),
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text('Delete'),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      );
-                    },
+          padding: const EdgeInsets.all(2),
+          itemCount: _productController.productList.length,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 6,
+            mainAxisSpacing: 6,
+            childAspectRatio: 0.70,
+          ),
+          itemBuilder: (context, index) {
+            final product = _productController.productList[index];
+
+            return ProductItem(
+              productName: product.productName ?? 'No Name',
+              productCode: product.productCode?.toString() ?? 'N/A',
+              productQuantity: product.qty ?? 0,
+              productPrice: (product.unitPrice ?? 0).toDouble(),
+              productUnitPrice: product.unitPrice ?? 0,
+              total: (product.totalPrice ?? 0).toDouble(),
+              imageLink: product.img,
+
+              onEdit: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const EditProductScreen(),
                   ),
+                );
+              },
+
+              onDelete: () {
+                // তোমার delete code
+              },
+            );
+          },
+        )
       ),
     );
   }
@@ -118,18 +88,26 @@ class _ProductListScreenState extends State<ProductListScreen> {
     return AppBar(
       title: const Text('Product List'),
       backgroundColor: Colors.blue,
+      actions: [
+        IconButton(
+            onPressed: () async {
+              await getData();
+            },
+            icon: Icon(Icons.refresh))
+      ],
     );
   }
 
   Widget _buildFloatingButton(BuildContext context) {
     return FloatingActionButton(
-      onPressed: () {
-        Navigator.push(
+      onPressed: () async {
+        await Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => const AddProductScreen(),
           ),
         );
+        await getData();
       },
       child: const Icon(Icons.add),
     );

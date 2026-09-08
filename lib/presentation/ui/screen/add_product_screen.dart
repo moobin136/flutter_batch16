@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_batch16/controller/product_controller.dart';
+import 'package:flutter_batch16/model/product_model.dart';
 
 class AddProductScreen extends StatefulWidget {
   const AddProductScreen({super.key});
@@ -9,9 +11,11 @@ class AddProductScreen extends StatefulWidget {
 
 class _AddProductScreenState extends State<AddProductScreen> {
   final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _imageLinkController = TextEditingController();
   final TextEditingController _codeController = TextEditingController();
   final TextEditingController _quantityController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
+  final TextEditingController _unitPriceController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   String? _validateNotEmpty(String? value) {
@@ -21,6 +25,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
     return null;
   }
 
+
+
   @override
   dispose() {
     _nameController.dispose();
@@ -28,14 +34,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
     _quantityController.dispose();
     _priceController.dispose();
     super.dispose();
-  }
-
-  int getProductQuantity() {
-    final quantityText = _quantityController.text;
-    if (quantityText.isEmpty) {
-      return 0;
-    }
-    return int.tryParse(quantityText) ?? 0;
   }
 
   double getProductPrice() {
@@ -72,6 +70,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
               ),
               TextFormField(
                 validator: _validateNotEmpty,
+                controller: _imageLinkController,
+                decoration: const InputDecoration(
+                  errorText: 'This field cannot be empty',
+                  labelText: 'Image link',
+                ),
+              ),
+              TextFormField(
+                validator: _validateNotEmpty,
                 controller: _codeController,
                 decoration: const InputDecoration(
                   errorText: 'This field cannot be empty',
@@ -94,6 +100,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   labelText: 'Product Price',
                 ),
               ),
+              TextFormField(
+                validator: _validateNotEmpty,
+                controller: _unitPriceController,
+                decoration: const InputDecoration(
+                  errorText: 'This field cannot be empty',
+                  labelText: 'Unit Price',
+                ),
+              ),
               const SizedBox(height: 20),
               SizedBox(
                 width: double.infinity,
@@ -104,7 +118,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     foregroundColor: Colors.white,
                     alignment: Alignment.center,
                   ),
-                  onPressed: () => _onTabSaveButton(),
+                  onPressed: () => _onTabSaveButton(Data()),
                   child: const Text('Save'),
                 ),
               ),
@@ -115,8 +129,20 @@ class _AddProductScreenState extends State<AddProductScreen> {
     );
   }
 
-  void _onTabSaveButton() {
+  Future<void> _onTabSaveButton(Data data) async {
     if (_formKey.currentState!.validate()) {
+      ProductController productController = ProductController();
+
+      await productController.createProduct(
+        Data(
+          img: _imageLinkController.text,
+          productCode: int.tryParse(_codeController.text) ?? 0,
+          productName: _nameController.text,
+          totalPrice: int.tryParse(_priceController.text) ?? 0,
+          qty: int.tryParse(_quantityController.text) ?? 0,
+          unitPrice: int.tryParse(_unitPriceController.text) ?? 0,
+        ),
+      );
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Align(
@@ -132,6 +158,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
           ),
         ),
       );
+
       Navigator.pop(context);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
