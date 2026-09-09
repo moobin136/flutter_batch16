@@ -1,4 +1,3 @@
-import 'package:flutter_batch16/controller/product_controller.dart';
 import 'package:flutter_batch16/export.dart';
 
 class ProductListScreen extends StatefulWidget {
@@ -39,48 +38,74 @@ class _ProductListScreenState extends State<ProductListScreen> {
       floatingActionButton: _buildFloatingButton(context),
       appBar: _buildAppBar(),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: _isLoading
-            ? const Center(child: CircularProgressIndicator())
-            : _productController.productList.isEmpty
-                ? const Center(child: Text('No Products Found!'))
-                : GridView.builder(
-          padding: const EdgeInsets.all(2),
-          itemCount: _productController.productList.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 6,
-            mainAxisSpacing: 6,
-            childAspectRatio: 0.70,
-          ),
-          itemBuilder: (context, index) {
-            final product = _productController.productList[index];
+          padding: const EdgeInsets.all(8.0),
+          child: _isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : _productController.productList.isEmpty
+                  ? const Center(child: Text('No Products Found!'))
+                  : GridView.builder(
+                      padding: const EdgeInsets.all(2),
+                      itemCount: _productController.productList.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 6,
+                        mainAxisSpacing: 6,
+                        childAspectRatio: 0.650,
+                      ),
+                      itemBuilder: (context, index) {
+                        final product = _productController.productList[index];
 
-            return ProductItem(
-              productName: product.productName ?? 'No Name',
-              productCode: product.productCode?.toString() ?? 'N/A',
-              productQuantity: product.qty ?? 0,
-              productPrice: (product.unitPrice ?? 0).toDouble(),
-              productUnitPrice: product.unitPrice ?? 0,
-              total: (product.totalPrice ?? 0).toDouble(),
-              imageLink: product.img,
+                        return ProductItem(
+                          productName: product.productName ?? 'No Name',
+                          productCode: product.productCode?.toString() ?? 'N/A',
+                          productQuantity: product.qty ?? 0,
+                          productPrice: (product.unitPrice ?? 0).toDouble(),
+                          productUnitPrice: product.unitPrice ?? 0,
+                          total: (product.totalPrice ?? 0).toDouble(),
+                          imageLink: product.img,
+                          onEdit: () async {
+                            final result = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditProductScreen(
+                                  product: product,
+                                ),
+                              ),
+                            );
 
-              onEdit: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const EditProductScreen(),
-                  ),
-                );
-              },
-
-              onDelete: () {
-                // তোমার delete code
-              },
-            );
-          },
-        )
-      ),
+                            if (result == true) {
+                              await getData();
+                            }
+                          },
+                          onDelete: () async {
+                            // Navigator.pop(context);
+                            ProductController productController =
+                                ProductController();
+                            bool success = await productController
+                                .deleteProduct(product.id);
+                            print(product.id);
+                            if (success) {
+                              Navigator.pop(context);
+                              await getData();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  backgroundColor: Colors.green,
+                                  content: Text('Success '),
+                                ),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  backgroundColor: Colors.red,
+                                  content: Text('Failed delete'),
+                                ),
+                              );
+                            }
+                          },
+                        );
+                      },
+                    )),
     );
   }
 

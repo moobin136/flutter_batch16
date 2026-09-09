@@ -37,37 +37,36 @@ class ProductItem extends StatelessWidget {
             // ================= IMAGE =================
             SizedBox(
               width: double.infinity,
-              height: 110,
+              height: 120,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(6),
                 child: imageLink == null || imageLink!.trim().isEmpty
                     ? _buildNoImage()
                     : Image.network(
-                  imageLink!,
-                  fit: BoxFit.contain,
-                  errorBuilder: (context, error, stackTrace) {
-                    return _buildNoImage();
-                  },
-                  loadingBuilder:
-                      (context, child, loadingProgress) {
-                    if (loadingProgress == null) {
-                      return child;
-                    }
+                        imageLink!,
+                        fit: BoxFit.contain,
+                        errorBuilder: (context, error, stackTrace) {
+                          return _buildNoImage();
+                        },
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          }
 
-                    return Container(
-                      color: Colors.grey[200],
-                      child: const Center(
-                        child: SizedBox(
-                          width: 25,
-                          height: 25,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                          ),
-                        ),
+                          return Container(
+                            color: Colors.grey[200],
+                            child: const Center(
+                              child: SizedBox(
+                                width: 25,
+                                height: 25,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
               ),
             ),
 
@@ -92,22 +91,22 @@ class ProductItem extends StatelessWidget {
               'Product Code',
               productCode ?? 'N/A',
             ),
-
+            const SizedBox(height: 4),
             _productInfo(
               'Qty',
               '${productQuantity ?? 0}',
             ),
-
+            const SizedBox(height: 4),
             _productInfo(
               'Price',
               '${productPrice ?? 0}',
             ),
-
+            const SizedBox(height: 4),
             _productInfo(
               'Unit Price',
               '${productUnitPrice ?? 0}',
             ),
-
+            const SizedBox(height: 4),
             _productInfo(
               'Total',
               '${total ?? 0}',
@@ -115,7 +114,9 @@ class ProductItem extends StatelessWidget {
 
             const Spacer(),
 
-            // ================= BUTTONS =================
+            const Expanded(
+                child: Divider(thickness: 0.2, color: Colors.black26)),
+            const SizedBox(height: 4),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -142,9 +143,30 @@ class ProductItem extends StatelessWidget {
                     ),
                   ),
                 ),
-
+                const Spacer(),
                 TextButton.icon(
-                  onPressed: onDelete,
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text(
+                            'Are you sure you want to delete this product?'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text('Cancel'),
+                          ),
+                          const Spacer(),
+                          TextButton(
+                            onPressed: onDelete,
+                            child: const Text('Delete'),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                   style: TextButton.styleFrom(
                     minimumSize: Size.zero,
                     padding: const EdgeInsets.symmetric(

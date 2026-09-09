@@ -1,9 +1,5 @@
-import 'dart:convert';
-import 'package:flutter/foundation.dart';
-import 'package:flutter_batch16/model/product_model.dart';
-import 'package:flutter_batch16/utils/url.dart';
 
-import 'package:http/http.dart';
+import 'package:flutter_batch16/export.dart';
 
 class ProductController {
   List<Data> productList = [];
@@ -67,5 +63,72 @@ class ProductController {
       }
     }
     return null;
+  }
+
+  Future<bool> deleteProduct(String? id) async {
+    if (id == null || id.isEmpty) {
+      print('Product ID is null or empty');
+      return false;
+    }
+
+    final Uri url = Uri.parse(AppUrl.deleteProduct(id));
+
+    try {
+      final Response response = await get(url);
+
+      print('Delete Status Code: ${response.statusCode}');
+      print('Delete Response: ${response.body}');
+
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print('Delete Error: $e');
+      return false;
+    }
+  }
+
+  Future<bool> updateProduct(Data data) async {
+    if (data.id == null || data.id!.isEmpty) {
+      print('Product ID is null or empty');
+      return false;
+    }
+
+    final Uri url = Uri.parse(
+      AppUrl.updateProduct(data.id),
+    );
+
+    try {
+      final Response response = await post(
+        url,
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          "ProductName": data.productName,
+          "ProductCode": data.productCode,
+          "Img": data.img,
+          "Qty": data.qty,
+          "UnitPrice": data.unitPrice,
+          "TotalPrice": data.totalPrice,
+        }),
+      );
+
+      print('Update URL: $url');
+      print('Update Status Code: ${response.statusCode}');
+      print('Update Response: ${response.body}');
+
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print('Update Error: $e');
+      return false;
+    }
   }
 }

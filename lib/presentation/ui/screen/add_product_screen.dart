@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_batch16/controller/product_controller.dart';
-import 'package:flutter_batch16/model/product_model.dart';
+import 'package:flutter_batch16/export.dart';
 
 class AddProductScreen extends StatefulWidget {
   const AddProductScreen({super.key});
