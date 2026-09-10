@@ -1,4 +1,3 @@
-
 import 'package:flutter_batch16/export.dart';
 
 class EditProductScreen extends StatefulWidget {
@@ -18,10 +17,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
   final TextEditingController _codeController = TextEditingController();
   final TextEditingController _quantityController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
-  final TextEditingController _unitPriceController =
-  TextEditingController();
-  final TextEditingController _imageLinkController =
-  TextEditingController();
+  final TextEditingController _unitPriceController = TextEditingController();
+  final TextEditingController _imageLinkController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -39,18 +36,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
   void initState() {
     super.initState();
 
-    // Existing product data form-এ বসানো
     _nameController.text = widget.product.productName ?? '';
-    _codeController.text =
-        widget.product.productCode?.toString() ?? '';
-    _quantityController.text =
-        widget.product.qty?.toString() ?? '';
-    _priceController.text =
-        widget.product.totalPrice?.toString() ?? '';
-    _unitPriceController.text =
-        widget.product.unitPrice?.toString() ?? '';
-    _imageLinkController.text =
-        widget.product.img ?? '';
+    _codeController.text = widget.product.productCode?.toString() ?? '';
+    _quantityController.text = widget.product.qty?.toString() ?? '';
+    _priceController.text = widget.product.totalPrice?.toString() ?? '';
+    _unitPriceController.text = widget.product.unitPrice?.toString() ?? '';
+    _imageLinkController.text = widget.product.img ?? '';
   }
 
   @override
@@ -83,8 +74,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
       _isLoading = true;
     });
 
-    final ProductController productController =
-    ProductController();
+    final ProductController productController = ProductController();
 
     final Data updatedProduct = Data(
       id: widget.product.id,
@@ -96,8 +86,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
       totalPrice: int.tryParse(_priceController.text.trim()),
     );
 
-    final bool success =
-    await productController.updateProduct(updatedProduct);
+    final bool success = await productController.updateProduct(updatedProduct);
 
     if (!mounted) return;
 
@@ -139,7 +128,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
         ),
         backgroundColor: Colors.blue,
       ),
-
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -223,25 +211,23 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       backgroundColor: Colors.blue,
                       foregroundColor: Colors.white,
                     ),
-                    onPressed: _isLoading
-                        ? null
-                        : _updateProduct,
+                    onPressed: _isLoading ? null : _updateProduct,
                     child: _isLoading
                         ? const SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: Colors.white,
-                      ),
-                    )
+                            width: 24,
+                            height: 24,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: Colors.white,
+                            ),
+                          )
                         : const Text(
-                      'Update Product',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                            'Update Product',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                   ),
                 ),
               ],
