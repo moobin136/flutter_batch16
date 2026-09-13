@@ -1,7 +1,7 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter_batch16/routes.dart';
 import 'package:flutter_batch16/utils/app_colors.dart';
-import 'export.dart';
+import '../export.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

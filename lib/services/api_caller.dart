@@ -1,9 +1,8 @@
 import 'dart:convert';
 
-import 'package:http/http.dart';
-import 'package:logger/logger.dart';
 
-import '../model/api_response/api_response.dart';
+import 'package:flutter_batch16/export.dart';
+
 
 class ApiCaller {
   static final Logger _logger = Logger();
