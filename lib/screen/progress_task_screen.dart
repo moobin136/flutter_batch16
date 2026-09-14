@@ -1,7 +1,4 @@
 import 'package:flutter_batch16/export.dart';
-import 'package:flutter_batch16/utils/app_colors.dart';
-
-import '../core/global_widgets/task_card_common.dart';
 
 class ProgressTaskScreen extends StatefulWidget {
   const ProgressTaskScreen({super.key});

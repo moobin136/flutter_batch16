@@ -1,7 +1,5 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter_batch16/export.dart';
-import 'package:flutter_batch16/routes.dart';
-import 'package:flutter_batch16/utils/app_colors.dart';
+
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});

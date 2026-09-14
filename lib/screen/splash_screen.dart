@@ -1,5 +1,6 @@
+
 import 'package:flutter_batch16/export.dart';
-import 'package:flutter_batch16/routes.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

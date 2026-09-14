@@ -1,8 +1,8 @@
-import 'package:flutter/gestures.dart';
+
 import 'package:flutter_batch16/export.dart';
-import 'package:flutter_batch16/routes.dart';
-import 'package:flutter_batch16/utils/app_colors.dart';
-import 'package:pinput/pinput.dart';
+
+
+
 
 class InputOTPScreen extends StatefulWidget {
   const InputOTPScreen({super.key});
