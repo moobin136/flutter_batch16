@@ -55,7 +55,7 @@ class ApiCaller {
       );
 
       return ApiResponse(
-        responseCode: 500,
+        responseCode: -1,
         responseData: null,
         isSuccess: false,
         errorMessage: e.toString(),
@@ -68,7 +68,7 @@ class ApiCaller {
   // ============================================================
 
   static Future<ApiResponse> postRequest(
-      String appUrl, Map<String, dynamic> body, String? token) async {
+      String appUrl, Map<String, dynamic> body, {String? token}) async {
     try {
       final Uri url = Uri.parse(appUrl);
 
@@ -116,7 +116,7 @@ class ApiCaller {
       );
 
       return ApiResponse(
-        responseCode: 500,
+        responseCode: -1,
         responseData: null,
         isSuccess: false,
         errorMessage: e.toString(),

@@ -1,7 +1,7 @@
-
+import 'package:flutter_batch16/core/utils/app_url.dart';
+import 'package:flutter_batch16/data/api_response/api_response.dart';
+import 'package:flutter_batch16/data/services/api_caller.dart';
 import 'package:flutter_batch16/export.dart';
-
-
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -66,11 +66,17 @@ class _LoginScreenState extends State<LoginScreen> {
                         ElevatedButton(
                           onPressed: () {
                             if (_gloBalLoginKey.currentState!.validate()) {
-                              print('login Press');
-                              Navigator.pushReplacementNamed(
-                                  context, AppRoutes.mainNavBarScreen);
+                              loginButton();
                             } else {
-                              // null;
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  backgroundColor: Colors.red,
+                                  content: CustomText(
+                                    text: 'Error',
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              );
                             }
                           },
                           child: const Icon(
@@ -135,6 +141,84 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> loginButton() async {
+    final Logger logger = Logger();
+
+    // API Call
+    final ApiResponse response = await ApiCaller.postRequest(
+      AppUrl.login,
+      {
+        "email": _emailLoginTEController.text.trim(),
+        "password": _passwordLoginTEController.text.trim(),
+      },
+
+    );
+
+    // Debug log
+    logger.i('================ LOGIN RESPONSE ================');
+    logger.i('Success : ${response.isSuccess}');
+    logger.i('Code    : ${response.responseCode}');
+    logger.i('Data    : ${response.responseData}');
+    logger.i('Error   : ${response.errorMessage}');
+    logger.i('==================================================');
+
+    // Screen এখনো active আছে কিনা
+    if (!mounted) return;
+
+    // ============================================================
+    // SUCCESS
+    // ============================================================
+
+    if (response.isSuccess) {
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(
+          const SnackBar(
+            backgroundColor: AppColors.primaryAppColor,
+            behavior: SnackBarBehavior.floating,
+            duration: Duration(seconds: 2),
+            content: CustomText(
+              text: 'Login Successfully',
+              color: Colors.white,
+            ),
+          ),
+        );
+
+      // SnackBar দেখানোর জন্য একটু সময়
+      await Future.delayed(
+        const Duration(seconds: 2),
+      );
+
+      if (!mounted) return;
+
+      // Main Screen
+      Navigator.pushReplacementNamed(
+        context,
+        AppRoutes.mainNavBarScreen,
+      );
+
+      return;
+    }
+
+    // ============================================================
+    // ERROR
+    // ============================================================
+
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.red,
+          behavior: SnackBarBehavior.floating,
+          duration: const Duration(seconds: 3),
+          content: CustomText(
+            text: response.responseCode.toString(),
+            color: Colors.white,
+          ),
+        ),
+      );
   }
 
   signUp() {

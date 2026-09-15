@@ -16,6 +16,20 @@ class TaskAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.green,
       automaticallyImplyLeading: false,
       centerTitle: false,
+      actions: [
+        // const Spacer(),
+        IconButton(
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, AppRoutes.loginScreen);
+            },
+            icon: const Icon(
+              Icons.login,
+              color: Colors.white,
+              size: 32,
+            )),
+        // const Spacer()
+        const SizedBox(width: 16)
+      ],
       title: GestureDetector(
         onTap: () {
           if (isProfilePage == false) {

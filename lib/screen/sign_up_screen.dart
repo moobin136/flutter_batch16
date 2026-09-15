@@ -1,4 +1,7 @@
 import 'package:flutter/gestures.dart';
+import 'package:flutter_batch16/core/utils/app_url.dart';
+import 'package:flutter_batch16/data/api_response/api_response.dart';
+import 'package:flutter_batch16/data/services/api_caller.dart';
 import 'package:flutter_batch16/export.dart';
 import 'package:flutter_batch16/routes.dart';
 
@@ -97,15 +100,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         const SizedBox(height: 16),
                         ElevatedButton(
-                          onPressed: () {
-                            if (_signUpGlobalKey.currentState!.validate()) {
-                              print('login Press');
-                              Navigator.pushReplacementNamed(
-                                  context, AppRoutes.loginScreen);
-                            } else {
-                              print('Error ');
-                            }
-                          },
+                          onPressed: () => signUpButton(context),
                           child: const Icon(
                             Icons.login,
                             size: 20,
@@ -149,6 +144,51 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> signUpButton(BuildContext context) async {
+    if (_signUpGlobalKey.currentState!.validate()) {
+      final Logger logger = Logger();
+      final ApiResponse response = await ApiCaller.postRequest(
+        AppUrl.register,
+        {
+          "email": _emailSignTEController.text,
+          "firstName": _firstNameSignTEController.text,
+          "lastName": _lastNameSignTEController.text,
+          "mobile": _phonNumberSignTEController.text,
+          "password": _passwordSignTEController.text.trim()
+        },
+      );
+      logger.e(response.responseCode);
+      logger.d(response.isSuccess);
+      logger.f(response.responseData);
+      logger.i(response.errorMessage);
+
+      if (response.isSuccess) {
+        Navigator.pushReplacementNamed(context, AppRoutes.loginScreen);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: AppColors.primaryAppColor,
+            content: Text('Success  Full SingUp'),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.red,
+            content: Text('Failed SingUp ${response.responseData} '),
+          ),
+        );
+      }
+    } else {
+      print('Error ');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.red,
+          content: Text('Failed SingUp '),
+        ),
+      );
+    }
   }
 
   logIn() {
