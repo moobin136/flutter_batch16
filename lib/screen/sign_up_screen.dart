@@ -183,7 +183,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     } else {
       print('Error ');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           backgroundColor: Colors.red,
           content: Text('Failed SingUp '),
         ),

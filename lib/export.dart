@@ -27,4 +27,7 @@ export 'package:logger/logger.dart';
 export 'package:flutter_batch16/screen/widget/task_count_card.dart';
 export 'package:pinput/pinput.dart';
 export 'package:flutter_batch16/core/utils/assets_path.dart';
-
+export 'dart:convert';
+export 'package:shared_preferences/shared_preferences.dart';
+export '../data/models/user_model.dart';
+export 'package:flutter_batch16/controller/auth_controller.dart';

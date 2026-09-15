@@ -1,3 +1,4 @@
+import 'package:flutter_batch16/controller/auth_controller.dart';
 import 'package:flutter_batch16/export.dart';
 import 'package:flutter_batch16/routes.dart';
 
@@ -19,7 +20,9 @@ class TaskAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         // const Spacer(),
         IconButton(
-            onPressed: () {
+            onPressed: () async {
+              await AuthController.getData();
+              await AuthController.clearTokenAndData();
               Navigator.pushReplacementNamed(context, AppRoutes.loginScreen);
             },
             icon: const Icon(

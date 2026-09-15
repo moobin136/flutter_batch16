@@ -1,3 +1,4 @@
+import 'package:flutter_batch16/controller/auth_controller.dart';
 import 'package:flutter_batch16/core/utils/app_url.dart';
 import 'package:flutter_batch16/data/api_response/api_response.dart';
 import 'package:flutter_batch16/data/services/api_caller.dart';
@@ -153,7 +154,6 @@ class _LoginScreenState extends State<LoginScreen> {
         "email": _emailLoginTEController.text.trim(),
         "password": _passwordLoginTEController.text.trim(),
       },
-
     );
 
     // Debug log
@@ -172,8 +172,15 @@ class _LoginScreenState extends State<LoginScreen> {
     // ============================================================
 
     if (response.isSuccess) {
+      UserModel model = UserModel.fromJson(response.responseData["data"]);
+      String token = (response.responseData["token"]);
+
+      AuthController.saveData(model, token);
+
+      logger.i('Auth has code : ${(AuthController.getData().hashCode)}');
+
       ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
+        ..hideCurrentMaterialBanner(reason: MaterialBannerClosedReason.hide)
         ..showSnackBar(
           const SnackBar(
             backgroundColor: AppColors.primaryAppColor,
@@ -186,9 +193,23 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         );
 
+      // ScaffoldMessenger.of(context).showMaterialBanner(
+      //   MaterialBanner(
+      //     surfaceTintColor: Colors.amber,
+      //     content: Text('Product added successfully'),
+      //     actions: [
+      //       TextButton(
+      //         onPressed: () {
+      //           Navigator.pop(context);
+      //         },
+      //         child: Text('OK'),
+      //       ),
+      //     ],
+      //   ),
+      // );
       // SnackBar দেখানোর জন্য একটু সময়
       await Future.delayed(
-        const Duration(seconds: 2),
+        const Duration(milliseconds: 200),
       );
 
       if (!mounted) return;

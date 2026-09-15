@@ -1,7 +1,6 @@
 
 import 'package:flutter_batch16/export.dart';
 
-
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -10,13 +9,19 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  Logger logger = Logger();
+
   Future<void> _moveToNextScreen() async {
     Future.delayed(
       const Duration(seconds: 2),
-      () {
+      () async {
+        AuthController.getData();
+        bool isLogin = await AuthController.isUserLogin();
+        logger.i('Auth has code : ${(AuthController.getData().hashCode)}');
+        logger.i('Auth has code : ${(AuthController.getData().hashCode)}');
         Navigator.pushReplacementNamed(
           context,
-          AppRoutes.loginScreen,
+          isLogin ? AppRoutes.mainNavBarScreen : AppRoutes.loginScreen,
         );
       },
     );

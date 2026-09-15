@@ -13,16 +13,19 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.8
-  #device_preview:
+  #device_preview: // device preview er jnne kn diceice valo hobe r reoponsib hochje ki na dekhar jnne
   device_preview:
-  #flutter svg
+  #flutter svg // svg picture support er jnne
   flutter_svg:
-  #pinput
+  #pinput  // input er decoradion er jnne
   pinput: ^6.0.2
-  #http
+  #http // api call er jnne
   http: ^1.1.0
-  #Logger
+  #Logger // debug chack korar jnne
   logger:
+  #shared_preferences: ^2.5.5 //token save korar jnne
+  shared_preferences:
+
 
 dev_dependencies:
   flutter_test:
