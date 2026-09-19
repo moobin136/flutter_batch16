@@ -7,13 +7,6 @@ class AuthController {
   static UserModel? userData;
 
   /// Save token and user data
-  ///
-  ///
-  AuthController._();
-
-  static final AuthController _instance = AuthController._();
-
-  factory AuthController() => _instance;
 
   static Future<void> saveData(
     UserModel model,
