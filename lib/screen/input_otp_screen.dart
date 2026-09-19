@@ -1,8 +1,4 @@
-
 import 'package:flutter_batch16/export.dart';
-
-
-
 
 class InputOTPScreen extends StatefulWidget {
   const InputOTPScreen({super.key});

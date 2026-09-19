@@ -1,4 +1,3 @@
-
 import 'package:flutter_batch16/export.dart';
 
 class SplashScreen extends StatefulWidget {

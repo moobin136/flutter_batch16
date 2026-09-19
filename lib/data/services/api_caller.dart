@@ -68,7 +68,8 @@ class ApiCaller {
   // ============================================================
 
   static Future<ApiResponse> postRequest(
-      String appUrl, Map<String, dynamic> body, {String? token}) async {
+      String appUrl, Map<String, dynamic> body,
+      {String? token}) async {
     try {
       final Uri url = Uri.parse(appUrl);
 

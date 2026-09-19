@@ -12,9 +12,9 @@ class _ProgressTaskScreenState extends State<ProgressTaskScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SingleChildScrollView(
-          child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-                child: ListView.builder(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+        child: ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: 10,
@@ -26,8 +26,8 @@ class _ProgressTaskScreenState extends State<ProgressTaskScreen> {
             dateTime: DateTime.now(),
             status: 'Progress',
           ),
-                ),
-              ),
-        ));
+        ),
+      ),
+    ));
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter_batch16/export.dart';
 
-
 class SetNewPasswordScreen extends StatefulWidget {
   const SetNewPasswordScreen({super.key});
 

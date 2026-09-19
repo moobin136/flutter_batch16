@@ -1,9 +1,4 @@
-import 'package:flutter/gestures.dart';
-import 'package:flutter_batch16/core/utils/app_url.dart';
-import 'package:flutter_batch16/data/api_response/api_response.dart';
-import 'package:flutter_batch16/data/services/api_caller.dart';
 import 'package:flutter_batch16/export.dart';
-import 'package:flutter_batch16/routes.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});

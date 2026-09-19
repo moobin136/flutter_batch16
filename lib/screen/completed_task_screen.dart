@@ -1,8 +1,5 @@
 import 'package:flutter_batch16/export.dart';
 
-
-
-
 class CompletedTaskScreen extends StatefulWidget {
   const CompletedTaskScreen({super.key});
 

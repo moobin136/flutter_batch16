@@ -1,4 +1,3 @@
-
 class UserModel {
   String? status;
   Data? data;
@@ -15,7 +14,7 @@ class UserModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> _data = <String, dynamic>{};
     _data["status"] = status;
-    if(data != null) {
+    if (data != null) {
       _data["data"] = data?.toJson();
     }
     _data["token"] = token;
@@ -31,7 +30,13 @@ class Data {
   String? mobile;
   String? createdDate;
 
-  Data({this.id, this.email, this.firstName, this.lastName, this.mobile, this.createdDate});
+  Data(
+      {this.id,
+      this.email,
+      this.firstName,
+      this.lastName,
+      this.mobile,
+      this.createdDate});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json["_id"];
