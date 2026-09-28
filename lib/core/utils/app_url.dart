@@ -11,6 +11,10 @@ class AppUrl {
   static String recoverVerifyOtp(String email, int otp) =>
       '$_baseUrl/RecoverVerifyEmail/$email/$otp';
   static const String recoverResetPassword = '$_baseUrl/RecoverResetPassword';
-  static const String createTask = '$_baseUrl/createTask';
+
   static  String deleteTask (String id)=> '$_baseUrl/deleteTask/$id';
+  static  String updateTaskStatus (String id)=> '$_baseUrl/updateTaskStatus/$id';
+
+  ///task start
+  static const String createTask = '$_baseUrl/createTask';
 }

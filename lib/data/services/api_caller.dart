@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:flutter_batch16/data/api_response/api_response.dart';
 import 'package:flutter_batch16/export.dart';
 
 class ApiCaller {
@@ -18,10 +15,13 @@ class ApiCaller {
         'Accept': 'application/json',
       };
 
-      if (token != null && token.isNotEmpty) {
-        headers['token'] = token;
-      }
+      // AuthController থেকে Token নিশ্চিত করা
+      String? activeToken = token ?? AuthController.token;
 
+      if (activeToken != null && activeToken.isNotEmpty) {
+        headers['token'] = activeToken;
+        headers['Authorization'] = activeToken; // Security coverage for Ostad API variation
+      }
       final Response response = await get(
         url,
         headers: headers,
@@ -78,10 +78,13 @@ class ApiCaller {
         'Accept': 'application/json',
       };
 
-      if (token != null && token.isNotEmpty) {
-        headers['token'] = token;
-      }
+      // AuthController থেকে Token নিশ্চিত করা
+      String? activeToken = token ?? AuthController.token;
 
+      if (activeToken != null && activeToken.isNotEmpty) {
+        headers['token'] = activeToken;
+        headers['Authorization'] = activeToken; // Security coverage for Ostad API variation
+      }
       final Response response = await post(
         url,
         headers: headers,
@@ -139,8 +142,12 @@ class ApiCaller {
         'Accept': 'application/json',
       };
 
-      if (token != null && token.isNotEmpty) {
-        headers['token'] = token;
+      // AuthController থেকে Token নিশ্চিত করা
+      String? activeToken = token ?? AuthController.token;
+
+      if (activeToken != null && activeToken.isNotEmpty) {
+        headers['token'] = activeToken;
+        headers['Authorization'] = activeToken; // Security coverage for Ostad API variation
       }
 
       final Response response = await put(
@@ -198,8 +205,12 @@ class ApiCaller {
         'Accept': 'application/json',
       };
 
-      if (token != null && token.isNotEmpty) {
-        headers['token'] = token;
+      // AuthController থেকে Token নিশ্চিত করা
+      String? activeToken = token ?? AuthController.token;
+
+      if (activeToken != null && activeToken.isNotEmpty) {
+        headers['token'] = activeToken;
+        headers['Authorization'] = activeToken; // Security coverage for Ostad API variation
       }
 
       final Response response = await delete(
