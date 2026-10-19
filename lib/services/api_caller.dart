@@ -3,76 +3,270 @@ import 'package:flutter_batch16/export.dart';
 class ApiCaller {
   static final Logger _logger = Logger();
 
-  static Future<ApiResponse> getRequest({required String URL}) async {
+  // ============================================================
+  // GET
+  // ============================================================
+
+  static Future<ApiResponse> getRequest(String appUrl, String? token) async {
     try {
-      Uri uri = Uri.parse(URL);
+      final Uri url = Uri.parse(appUrl);
 
-      _logger.i(URL);
+      final Map<String, String> headers = {
+        'Accept': 'application/json',
+      };
 
-      Response response = await get(uri, headers: {'token': ''});
+      // AuthController থেকে Token নিশ্চিত করা
+      String? activeToken = token ?? AuthController.token;
 
-      _logger.i(response.body);
+      if (activeToken != null && activeToken.isNotEmpty) {
+        headers['token'] = activeToken;
+        headers['Authorization'] = activeToken; // Security coverage for Ostad API variation
+      }
+      final Response response = await get(
+        url,
+        headers: headers,
+      );
 
-      if (response.statusCode == 200) {
+      _logger.i('GET: $appUrl');
+      _logger.i('Status: ${response.statusCode}');
+      _logger.i('Response: ${response.body}');
+
+      final responseData = _decodeResponse(response.body);
+
+      if (response.statusCode >= 200 && response.statusCode < 300) {
         return ApiResponse(
           responseCode: response.statusCode,
-          responseData: jsonDecode(response.body),
+          responseData: responseData,
           isSuccess: true,
         );
-      } else {
-        return ApiResponse(
-            responseCode: response.statusCode,
-            responseData: jsonDecode(response.body),
-            isSuccess: false,
-            errorMessage: jsonDecode(response.body));
       }
-    } catch (e) {
+
       return ApiResponse(
-          responseCode: -1,
-          responseData: null,
-          isSuccess: false,
-          errorMessage: e.toString());
+        responseCode: response.statusCode,
+        responseData: responseData,
+        isSuccess: false,
+        errorMessage: response.body,
+      );
+    } catch (e, stackTrace) {
+      _logger.e(
+        'GET Error: $e',
+        error: e,
+        stackTrace: stackTrace,
+      );
+
+      return ApiResponse(
+        responseCode: -1,
+        responseData: null,
+        isSuccess: false,
+        errorMessage: e.toString(),
+      );
     }
   }
 
+  // ============================================================
+  // POST
+  // ============================================================
+
   static Future<ApiResponse> postRequest(
-      {required String URL, Map<String, dynamic>? body}) async {
+      String appUrl, Map<String, dynamic> body,
+      {String? token}) async {
     try {
-      Uri uri = Uri.parse(URL);
+      final Uri url = Uri.parse(appUrl);
 
-      _logger.i(URL);
+      final Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      };
 
-      Response response = await post(
-        uri,
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json",
-          'token': ''
-        },
-        body: body != null ? jsonEncode(body) : null,
+      // AuthController থেকে Token নিশ্চিত করা
+      String? activeToken = token ?? AuthController.token;
+
+      if (activeToken != null && activeToken.isNotEmpty) {
+        headers['token'] = activeToken;
+        headers['Authorization'] = activeToken; // Security coverage for Ostad API variation
+      }
+      final Response response = await post(
+        url,
+        headers: headers,
+        body: jsonEncode(body),
       );
 
-      _logger.i(response.body);
+      _logger.i('POST: $appUrl');
+      _logger.i('Body: $body');
+      _logger.i('Status: ${response.statusCode}');
+      _logger.i('Response: ${response.body}');
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
+      final responseData = _decodeResponse(response.body);
+
+      if (response.statusCode >= 200 && response.statusCode < 300) {
         return ApiResponse(
           responseCode: response.statusCode,
-          responseData: jsonDecode(response.body),
+          responseData: responseData,
           isSuccess: true,
         );
-      } else {
-        return ApiResponse(
-            responseCode: response.statusCode,
-            responseData: jsonDecode(response.body),
-            isSuccess: false,
-            errorMessage: jsonDecode(response.body));
       }
-    } catch (e) {
+
       return ApiResponse(
-          responseCode: -1,
-          responseData: null,
-          isSuccess: false,
-          errorMessage: e.toString());
+        responseCode: response.statusCode,
+        responseData: responseData,
+        isSuccess: false,
+        errorMessage: response.body,
+      );
+    } catch (e, stackTrace) {
+      _logger.e(
+        'POST Error: $e',
+        error: e,
+        stackTrace: stackTrace,
+      );
+
+      return ApiResponse(
+        responseCode: -1,
+        responseData: null,
+        isSuccess: false,
+        errorMessage: e.toString(),
+      );
+    }
+  }
+
+  // ============================================================
+  // PUT / UPDATE
+  // ============================================================
+
+  static Future<ApiResponse> putRequest(
+      String appUrl, Map<String, dynamic> body, String? token) async {
+    try {
+      final Uri url = Uri.parse(appUrl);
+
+      final Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      };
+
+      // AuthController থেকে Token নিশ্চিত করা
+      String? activeToken = token ?? AuthController.token;
+
+      if (activeToken != null && activeToken.isNotEmpty) {
+        headers['token'] = activeToken;
+        headers['Authorization'] = activeToken; // Security coverage for Ostad API variation
+      }
+
+      final Response response = await put(
+        url,
+        headers: headers,
+        body: jsonEncode(body),
+      );
+
+      _logger.i('PUT: $appUrl');
+      _logger.i('Body: $body');
+      _logger.i('Status: ${response.statusCode}');
+      _logger.i('Response: ${response.body}');
+
+      final responseData = _decodeResponse(response.body);
+
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return ApiResponse(
+          responseCode: response.statusCode,
+          responseData: responseData,
+          isSuccess: true,
+        );
+      }
+
+      return ApiResponse(
+        responseCode: response.statusCode,
+        responseData: responseData,
+        isSuccess: false,
+        errorMessage: response.body,
+      );
+    } catch (e, stackTrace) {
+      _logger.e(
+        'PUT Error: $e',
+        error: e,
+        stackTrace: stackTrace,
+      );
+
+      return ApiResponse(
+        responseCode: 500,
+        responseData: null,
+        isSuccess: false,
+        errorMessage: e.toString(),
+      );
+    }
+  }
+
+  // ============================================================
+  // DELETE
+  // ============================================================
+
+  static Future<ApiResponse> deleteRequest(String appUrl, String? token) async {
+    try {
+      final Uri url = Uri.parse(appUrl);
+
+      final Map<String, String> headers = {
+        'Accept': 'application/json',
+      };
+
+      // AuthController থেকে Token নিশ্চিত করা
+      String? activeToken = token ?? AuthController.token;
+
+      if (activeToken != null && activeToken.isNotEmpty) {
+        headers['token'] = activeToken;
+        headers['Authorization'] = activeToken; // Security coverage for Ostad API variation
+      }
+
+      final Response response = await delete(
+        url,
+        headers: headers,
+      );
+
+      _logger.i('DELETE: $appUrl');
+      _logger.i('Status: ${response.statusCode}');
+      _logger.i('Response: ${response.body}');
+
+      final responseData = _decodeResponse(response.body);
+
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return ApiResponse(
+          responseCode: response.statusCode,
+          responseData: responseData,
+          isSuccess: true,
+        );
+      }
+
+      return ApiResponse(
+        responseCode: response.statusCode,
+        responseData: responseData,
+        isSuccess: false,
+        errorMessage: response.body,
+      );
+    } catch (e, stackTrace) {
+      _logger.e(
+        'DELETE Error: $e',
+        error: e,
+        stackTrace: stackTrace,
+      );
+
+      return ApiResponse(
+        responseCode: 500,
+        responseData: null,
+        isSuccess: false,
+        errorMessage: e.toString(),
+      );
+    }
+  }
+
+  // ============================================================
+  // JSON Decode Helper
+  // ============================================================
+
+  static dynamic _decodeResponse(String body) {
+    if (body.isEmpty) {
+      return null;
+    }
+
+    try {
+      return jsonDecode(body);
+    } catch (_) {
+      return body;
     }
   }
 }
