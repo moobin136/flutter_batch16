@@ -1,4 +1,4 @@
-import 'export.dart';
+import 'package:flutter_batch16/export.dart';
 
 class AppRoutes {
   static const String initialRoute = '/';
@@ -22,7 +22,7 @@ class AppRoutes {
       loginScreen: (context) => const LoginScreen(),
       signUpScreen: (context) => const SignUpScreen(),
       mainNavBarScreen: (context) => const MainNavBarScreen(),
-      completedTaskScreen: (context) => const CancelTaskScreen(),
+      completedTaskScreen: (context) => const CompletedTaskScreen(),
       cancelTaskScreen: (context) => const CancelTaskScreen(),
       newTaskScreen: (context) => const NewTaskScreen(),
       progressTaskScreen: (context) => const ProgressTaskScreen(),

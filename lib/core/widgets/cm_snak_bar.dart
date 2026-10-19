@@ -1,4 +1,4 @@
-import '../../export.dart';
+import 'package:flutter_batch16/export.dart';
 
 void snackBar({
   required BuildContext context,
