@@ -25,6 +25,10 @@ dependencies:
   logger:
   #shared_preferences: ^2.5.5 //token save korar jnne
   shared_preferences:
+  #provider // state management er jnne (Unit Converter)
+  provider: ^6.1.2
+  #google_fonts // custom font er jnne
+  google_fonts: ^6.2.1
 
 
 dev_dependencies:
